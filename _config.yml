@@ -13,10 +13,6 @@ twitter_username: salexlockhart
 github_username:  salockhart
 linkedin_username:  salockhart
 
-# Google-analytics
-google-analytics:
-  id: "UA-98748109-1"
-
 sass:
   sass_dir: css
   style: compressed
