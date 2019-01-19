@@ -9,7 +9,11 @@ $purple: #54516A;
 $light: #FFF;
 $cut: 768px;
 
-// Common
+$h1-size: 100px;
+$h2-size: 40px;
+$icon-size: 35px;
+
+$footer-height: 88px;
 
 @import url( 'https://fonts.googleapis.com/css?family=Montserrat');
 
@@ -17,376 +21,89 @@ body {
     margin: 0;
     font-family: 'Montserrat', sans-serif;
     background: $main;
+    color: $light;
+    text-align: center;
+
+    height: 100vh;
+    width: 100vw;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: auto $footer-height;
 }
 
 h1 {
-    font-size: 50px;
-    font-weight: 300;
-    display: block;
-    line-height: 1;
-    letter-spacing: -.1rem;
+    font-size: $h1-size / 2;
+    margin: 0;
+
+    @media only screen and (min-width:$cut) {
+        font-size: $h1-size;
+    }
 }
 
 h2 {
-    font-size: 40px;
-    display: block;
-    line-height: 1;
+    font-size: $h2-size / 2;
     margin: 5px 0 10px;
+
+    @media only screen and (min-width:$cut) {
+        font-size: $h2-size;
+    }
 }
 
-h3 {
-    font-size: 30px;
-}
-
-h4 {
-    font-size: 25px;
-}
-
-.content {
-    background: $light;
-    padding: 20px 0 100px;
-}
-
-.container {
-    width: 70%;
-    margin: auto;
-}
-
-.project-link {
-    display: block;
-    float: left;
-    width: 100px;
-    margin: 3px;
-    padding: 5px;
-    color: $main;
-    background-color: transparent;
-    border: 1px solid $main;
-    border-radius: 10px;
-    text-align: center;
-    outline: none;
+a {
     text-decoration: none;
-    cursor: pointer;
-    transition: color 0.3s ease-out, background-color 0.3s ease-out, border-color 0.3s ease-out;
+    color: inherit;
 
     &:hover {
-        background-color: $purple;
-        border-color: $purple;
-        color: #fff;
-        transition: color 0.3s ease-in, background-color 0.3s ease-in, border-color 0.3s ease-in;
+        color: $sec;
     }
 
     &:active {
-        background-color: $purple;
-        border-color: $purple;
-        color: #fff;
-        transition: color 0.3s ease-in, background-color 0.3s ease-in, border-color 0.3s ease-in;
+        color: $sec;
     }
 }
 
-.footer {
-    background: $main;
-    padding: 10px 0;
-    text-align: center;
-    color: #FFF;
+main {
+    grid-row: 1;
+    align-self: center;
+    transform: translateY($footer-height / 2);
 
-    .love {
-        color: red;
-    }
+    .icons-container {
+        display: flex;
+        justify-content: center;
 
-    a {
-        text-decoration: none;
-        margin: 0;
-        color: #FFF;
-
-        &:hover {
-            color: $sec;
-        }
-
-        &:active {
-            color: $sec;
-        }
-    }
-}
-
-// Pulse Animation
-
-@-webkit-keyframes pulse {
-    from {
-        -ms-filter:  "progid:DXImageTransform.Microsoft.Alpha(Opacity=40)";
-        filter: alpha(opacity=40);
-        opacity: 0.4;
-        top: 0;
-    }
-
-    50% {
-        -ms-filter: none;
-        -webkit-filter: none;
-        filter: none;
-        opacity: 1;
-        top: -10px;
-    }
-
-    to {
-        -ms-filter:  "progid:DXImageTransform.Microsoft.Alpha(Opacity=40)";
-        filter: alpha(opacity=40);
-        opacity: 0.4;
-        top: 0;
-    }
-}
-@keyframes pulse {
-    from {
-        -ms-filter:  "progid:DXImageTransform.Microsoft.Alpha(Opacity=40)";
-        filter: alpha(opacity=40);
-        opacity: 0.4;
-        top: 0;
-    }
-
-    50% {
-        -ms-filter: none;
-        -webkit-filter: none;
-        filter: none;
-        opacity: 1;
-        top: -10px;
-    }
-
-    to {
-        -ms-filter:  "progid:DXImageTransform.Microsoft.Alpha(Opacity=40)";
-        filter: alpha(opacity=40);
-        opacity: 0.4;
-        top: 0;
-    }
-}
-
-
-// Default Layout
-
-#particles-js {
-    display: block;
-    vertical-align: bottom;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-attachment: fixed;
-}
-
-.particles-large {
-    width: 100vw;
-    min-height: 100vh;
-    .particles-js-canvas-el {
-        width: 100vw !important;
-        height: 100vh !important;
-    }
-}
-
-.particles-small {
-    width: 100vw;
-    min-height: 117px;
-    .particles-js-canvas-el {
-        width: 100vw !important;
-        height: 160px !important;
-    }
-}
-
-@media only screen and (min-width: 347px) {
-    .particles-small {
-        .particles-js-canvas-el {
-            height: 117px !important;
-        }
-    }
-}
-
-.main-title {
-    z-index: 1;
-    text-align: center;
-    color: #FFF;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin: 0 auto;
-    -webkit-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-
-    .site-title {
-        @media only screen and (min-width:$cut) {
-            margin: 0;
-            font-size: 100px;
-        }
-    }
-
-    .site-subtitle {
-        @media only screen and (min-width:$cut) {
-            font-size: 40px;
-        }
-    }
-
-    .link {
-        color: #FFF;
-        display: inline-flex;
-        justify-content: space-between;
-        text-decoration: none;
-        font-size: 15px;
-        margin: 10px;
-        @media only screen and (min-width:$cut) {
-            font-size: 20px;
-        }
-    }
-}
-
-.icons-header {
-    display: flex;
-    justify-content: center;
-    text-align: center;
-
-    .icon {
-        text-align: center;
-        color: #FFF;
-        width: 20px;
-        height: 20px;
-        font-size: 20px;
-        padding: 10px;
-        margin: 2px;
-        border-radius: 50%;
-        border: 2px solid #FFF;
-        transition: all 0.7s;
-
-        &:hover {
-            color: $main;
-            background: #FFF;
-        }
-
-        &:active {
-            color: $main;
-            background: #FFF;
-        }
-        @media only screen and (min-width:$cut) {
-            width: 35px;
-            height: 35px;
-            font-size: 35px;
-        }
-    }
-}
-
-.down {
-    color: #FFF;
-    position: absolute;
-    bottom: 25px;
-    width: 100%;
-    margin: 0 auto;
-    display: block;
-    text-align: center;
-    font-size: 30px;
-    cursor: pointer;
-
-    .icon {
-        position: absolute;
-        -webkit-transform-style: preserve-3d;
-        transform-style: preserve-3d;
-        top: 50%;
-        left: 50%;
-        -webkit-transform: translate(-50%, -50%);
-        transform: translate(-50%, -50%);
-        width: 100px;
-        height: 100px;
-        fill: #fff;
-        -webkit-animation: pulse 1.3s infinite;
-        animation: pulse 1.3s infinite;
-
-        &:hover {
-            color: $sec;
-        }
-
-        &:active {
-            color: $sec;
-        }
-    }
-}
-
-.about {
-    text-align: center;
-}
-
-.skills {
-    .skill {
-        padding: 10px;
-        text-align: center;
-        font-size: 50px;
-    }
-}
-
-@media only screen and (min-width: 680px) {
-    .skills {
-        .skill {
+        .icon {
+            width: $icon-size / 2;
+            height: $icon-size / 2;
+            font-size: $icon-size / 2;
             padding: 10px;
-            text-align: center;
-            font-size: 90px;
-        }
-    }
-}
+            margin: 2px;
+            border-radius: 50%;
+            border: 2px solid $light;
 
-@media only screen and (min-width: 1200px) {
-    .skills {
-        .skill {
-            padding: 10px;
-            text-align: center;
-            font-size: 110px;
-        }
-    }
-}
+            &:hover {
+                color: $main;
+                background: $light;
+            }
 
-.experiences,
-.projects {
-    .experience,
-    .project {
-        margin: 20px 0;
+            &:active {
+                color: $main;
+                background: $light;
+            }
 
-        h4 {
-            margin-top: 0;
-            margin-bottom: 16px;
-        }
-
-        img {
-            max-width: 100%;
-        }
-
-        ul {
-            list-style: none;
-            margin: 0;
-            overflow: hidden;
-            padding: 0;
-
-            li {
-                float: left;
-                background: #eee;
-                border-radius: 3px;
-                color: #999;
-                height: 26px;
-                line-height: 26px;
-                padding: 3px 10px;
-                margin: 5px;
-                position: relative;
+            @media only screen and (min-width:$cut) {
+                width: $icon-size;
+                height: $icon-size;
+                font-size: $icon-size;
             }
         }
     }
 }
 
-// Posts Layout
+footer {
+    grid-row: 2;
+    align-self: end;
 
-.post-title {
-    z-index: 1;
-    margin: 0 auto;
-    color: #FFF;
-    position: absolute;
-
-    h1 {
-        margin-left: 33.5px;
-    }
-}
-
-.post {
-    img {
-        width: 400px;
-        max-width: 100%;
-        float: left;
-        margin-right: 20px;
-        margin-bottom: 20px;
+    .love {
+        color: red;
     }
 }

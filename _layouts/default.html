@@ -3,60 +3,16 @@
 {% include head.html %}
 
 <body>
-    <div id="particles-js" class="particles-large">
-        <div class="main-title">
-            <h1 class="site-title">{{site.username}}</h1>
-            <h2 class="site-subtitle">{{site.user_subtitle}}</h2>
-            <div class="icons-header">
-                <a aria-label="Email" href="mailto:{{site.email}}"><i class="icon fa fa-envelope"></i></a>
-                <a aria-label="Twitter" target="_blank" href="https://twitter.com/{{site.twitter_username}}"><i class="icon fa fa-twitter" aria-hidden="true"></i></a>
-                <a aria-label="Github" target="_blank" href="https://github.com/{{site.github_username}}"><i class="icon fa fa-github" aria-hidden="true"></i></a>
-                <a aria-label="LinkedIn" target="_blank" href="https://www.linkedin.com/in/{{site.linkedin_username}}"><i class="icon fa fa-linkedin" aria-hidden="true"></i></a>
-            </div>
-            <a class="link" href="#about" data-scroll>About Me</a>
-            <a class="link" href="#projects" data-scroll>Projects</a>
+    <main>
+        <h1>{{site.username}}</h1>
+        <h2>{{site.user_subtitle}}</h2>
+        <div class="icons-container">
+            <a aria-label="Email" href="mailto:{{site.email}}"><i class="icon fa fa-envelope"></i></a>
+            <a aria-label="Twitter" target="_blank" href="https://twitter.com/{{site.twitter_username}}"><i class="icon fa fa-twitter" aria-hidden="true"></i></a>
+            <a aria-label="Github" target="_blank" href="https://github.com/{{site.github_username}}"><i class="icon fa fa-github" aria-hidden="true"></i></a>
+            <a aria-label="LinkedIn" target="_blank" href="https://www.linkedin.com/in/{{site.linkedin_username}}"><i class="icon fa fa-linkedin" aria-hidden="true"></i></a>
         </div>
-        <a class="down" href="#about" data-scroll><i class="icon fa fa-chevron-down" aria-hidden="true"></i></a>
-    </div>
-    <div class="content">
-        <section id="about">
-            <div class="container">
-                <div class="about">
-                    <h3> About Me </h3>
-                    <p> {{site.user_description}} </p>
-                </div>
-            </div>
-        </section>
-        <section id="projects">
-            <div class="container projects">
-                <h3>Posts</h3>
-                {% for post in site.posts%}
-                    <div class="row project">
-                        <div class="col-md-6">
-                            <img alt="{{ post.image_alt }}" src="{{ post.image | prepend: site.baseurl }}" />
-                        </div>
-                        <div class="col-md-6">
-                            <h4>{{ post.title }}</h5>
-                            <ul>
-                                {% for tag in post.tags %}
-                                    <li>{{ tag }}</li>
-                                {% endfor %}
-                            </ul>
-                            <p>{{ post.excerpt }}</p>
-                            <a class="project-link" href="{{ post.url }}">Read more</a>
-                            {% if post.code %}
-                                <a class="project-link" href="{{ post.code }}">Check it out</a>
-                            {% endif %}
-                            {% if post.demo %}
-                                <a class="project-link" href="{{ post.demo }}">Try it</a>
-                            {% endif %}
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
-        </section>
-        {{ content }}
-    </div>
+    </main>
     {% include footer.html %}
 </body>
 

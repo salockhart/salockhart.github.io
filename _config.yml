@@ -1,14 +1,10 @@
 # Site settings
 title: Alex Lockhart
-description: A blog about me.
-# baseurl: "/particle" # the subpath of your site, e.g. /blog
-# url: "localhost:4000" # the base hostname & protocol for your site e.g. http://willianjusten.com.br
 
 # User settings
 username: Alex Lockhart
 user_subtitle: Software Developer
-user_description: Full Stack Software Developer from Halifax, NS
-email: salexlockhart@gmail.com
+email: me@alexlockhart.ca
 twitter_username: salexlockhart
 github_username:  salockhart
 linkedin_username:  salockhart
