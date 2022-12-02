@@ -4,8 +4,10 @@ title: Alex Lockhart
 # User settings
 username: Alex Lockhart
 user_subtitle: Software Developer
-github_username:  salockhart
-linkedin_username:  salockhart
+github_username: salockhart
+linkedin_username: salockhart
+mastodon_username: lockhart
+twitter_username: salexlockhart
 
 sass:
   sass_dir: css
