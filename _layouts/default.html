@@ -1,19 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-{% include head.html %}
-
-<body>
-    <main>
-        <h1>{{site.username}}</h1>
-        <h2>{{site.user_subtitle}}</h2>
-        <div class="icons-container">
-            <a aria-label="Github" target="_blank" href="https://github.com/{{site.github_username}}"><i class="icon fa fa-github" aria-hidden="true"></i></a>
-            <a aria-label="LinkedIn" target="_blank" href="https://www.linkedin.com/in/{{site.linkedin_username}}"><i class="icon fa fa-linkedin" aria-hidden="true"></i></a>
-            <a aria-label="Twitter" target="_blank" href="https://twitter.com/{{site.twitter_username}}"><i class="icon fa fa-twitter" aria-hidden="true"></i></a>
-            <a aria-label="Mastodon" target="_blank" href="https://mastodon.social/@{{site.mastodon_username}}" rel="me"><i class="icon fa-brands fa-mastodon" aria-hidden="true"></i></a>
-        </div>
-    </main>
-    {% include footer.html %}
-</body>
-
+  {% include head.html %}
+  <body>
+    <nav>{% include nav.html %}</nav>
+    <div class="wrapper">
+      <main>{{ content }}</main>
+      <footer>{% include footer.html %}</footer>
+    </div>
+  </body>
 </html>
