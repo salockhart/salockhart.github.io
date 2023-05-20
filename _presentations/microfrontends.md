@@ -819,5 +819,17 @@ Notes:
 
 ## Thank you!
 
+<div style="display: grid; grid-template-columns: repeat(2, 1fr); place-items: center;">
+  <div style="display: flex; flex-direction: column; align-items: center;">
+    <p>Alex Lockhart</p>
+    <img src="/assets/profile.jpg" alt="a photo of the author" style="width: 200px" />
+    <img src="{{ page_assets }}/logo-datasite-light.svg" style="width: 200px" />
+  </div>
+  <div style="width: 100%">
+    <a href="https://lockhart.dev">lockhart.dev</a>
+    <img src="{{ page_assets }}/qr.png" style="width: 60%" />
+  </div>
+</div>
+
 </textarea>
 </section>
