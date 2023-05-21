@@ -27,6 +27,10 @@ defaults:
     values:
       layout: "default"
   - scope:
+      path: "_posts/**/*.md"
+    values:
+      layout: "post"
+  - scope:
       path: "_notes/**/*.md"
     values:
       layout: "note"

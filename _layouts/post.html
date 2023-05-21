@@ -1,0 +1,24 @@
+---
+layout: default
+---
+
+<content>
+  <!-- title -->
+  {% if page.title %}
+  <h1>{{page.title}}</h1>
+  {% endif %}
+
+  <!-- date -->
+  {% if page.date %}
+  <subtitle>{{page.date | date: "%d %b %Y"}}</subtitle>
+  {% endif %}
+
+  <!-- content -->
+  {{ content }}
+</content>
+
+<style>
+  .wrapper {
+    max-width: 46em;
+  }
+</style>

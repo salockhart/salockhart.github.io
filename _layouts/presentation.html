@@ -30,6 +30,10 @@
       Reveal.initialize({
         hash: true,
 
+
+        defaultTiming: 120,
+        totalTime: "{{ page.reveal.totalTime | default: undefined }}",
+
         // Learn about plugins: https://revealjs.com/plugins/
         plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
       });

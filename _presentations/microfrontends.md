@@ -1,5 +1,7 @@
 ---
-title: Micro Frontends
+title: Microfrontends
+reveal:
+  totalTime: 1200
 ---
 
 <!-- Get the assets path, removing the trailing slash -->
@@ -15,16 +17,16 @@ title: Micro Frontends
   }
 </style>
 
-<section data-markdown>
+<section data-markdown data-separator-vertical="Aside:\n">
 <textarea data-template>
 
-## Micro Frontends
+## Microfrontends
 
 Alex Lockhart
 
 ---
 
-<!-- .slide: data-auto-animate -->
+<!-- .slide: data-auto-animate data-auto-animate-id="the-problem" -->
 
 ## The Problem
 
@@ -52,7 +54,7 @@ Notes:
 
 ---
 
-<!-- .slide: data-auto-animate -->
+<!-- .slide: data-auto-animate data-auto-animate-id="the-problem" -->
 
 ## The Problem
 
@@ -93,9 +95,14 @@ Notes:
 
 Notes:
 
+- So why is this a problem?
+- (next)
 - Well, bigger applications probably have more developers all working on the same codebase.
+- (next)
 - Bigger applications also mean longer build times, both locally and in your CI pipeline.
-- When your application takes an hour to build… you have a problem.
+  - When your application takes an hour to build… you have a problem.
+- (next)
+- And, loading that giant frontend application means that your users have to wait!
 
 ---
 
@@ -133,14 +140,36 @@ Notes:
 
 - We have ways of solving this on the backend. We can start splitting up our servers into a classic microservice architecture.
 - Instead of a monolith that handles EVERYTHING, we have an entrypoint and a bunch of smaller microservices that handle specific slices of our business.
-- This lets our development teams each focus on one or more individual microservices - no more giant merge conflicts because you’re in the same codebase of 100 other people.
+- This lets our development teams each focus on one or more individual microservices - no more giant merge conflicts because you’re in the same codebase with 100 other people.
 - These microservices are also much faster to build and deploy - instead of waiting an hour for our monolith, it might take only 10 minutes for our microservice to deploy.
 - And most importantly - if we do it right, our users will never be able to tell the difference.
 - That’s great for our backend - but what about our web app?
 
 ---
 
-<!-- .slide: data-auto-animate -->
+## Goals
+
+1. It should feel like one application <!-- .element: class="fragment" -->
+2. It should be performant <!-- .element: class="fragment" -->
+3. It should have a great development experience <!-- .element: class="fragment" -->
+
+Notes:
+
+- Looking at what we can do in the backend, we can set some goals.
+- We want this to be a step forward, not a step back.
+  - (next)
+  - We had one application, and we want it to keep feeling like that.
+    - Just like how our microservices feel like one API!
+  - (next)
+  - We don't want a performance hit for this.
+    - Our users don't want a worse experience just so we can try fun things!
+  - (next)
+  - We want to keep our developer experience good.
+    - Otherwise, what's the point!
+
+---
+
+<!-- .slide: data-auto-animate data-auto-animate-id="web-app-slices" -->
 
 <div class="r-stack">
   <img src="{{ page_assets }}/web-app-blank.png" />
@@ -155,7 +184,7 @@ Notes:
 
 ---
 
-<!-- .slide: data-auto-animate -->
+<!-- .slide: data-auto-animate data-auto-animate-id="web-app-slices" -->
 
 <div class="r-stack">
   <img src="{{ page_assets }}/web-app-blank.png" />
@@ -164,82 +193,33 @@ Notes:
   <img src="{{ page_assets }}/web-app-red-blue.png" style="position: relative; left: 300px;" />
 </div>
 
-## Micro Frontends <!-- .element: class="fragment" -->
+## Microfrontends <!-- .element: class="fragment" -->
 
-## MFEs <!-- .element: class="fragment" style="text-transform: initial" -->
+## (or MFEs) <!-- .element: class="fragment" style="text-transform: initial" -->
 
 Notes:
 
 - Instead of a single monolith web application, we could break this up into multiple small ones
 - Each small web app could then handle it's own things, and we'd stitch them together to make a single consistent experience
 - (next)
-- We could even call them.... **Micro Frontends**
+- We could even call them.... **Microfrontends**
 - (next)
 - Or for short, MFEs
 
 ---
 
-## Goals
-
-1. It should feel like one application <!-- .element: class="fragment" -->
-2. It should be performant <!-- .element: class="fragment" -->
-3. It should have a great development experience <!-- .element: class="fragment" -->
-
-Notes:
-
-- Before we go any further, let's set our sights on some goals.
-- We want this to be a step forward, not a step back.
-  - (next)
-  - We had one application, and we want it to keep feeling like that.
-    - Just like how our microservices feel like one API!
-  - (next)
-  - We don't want a performance hit for this.
-    - Our users don't want a worse experience just so we can try fun things!
-  - (next)
-  - We want to keep our developer experience good.
-    - Otherwise, what's the point!
-
----
-
-<div style="display: grid; grid-template-columns: repeat(3, 1fr); place-items: center;">
-  <img src="{{ page_assets }}/web-app-split.png" />
-  <h2>Vs.</h2>
-  <img src="{{ page_assets }}/web-app-iframe.png" />
-</div>
-
-- Doesn't work exactly as "one web app." <!-- .element: class="fragment" -->
-- We end up downloading the same things many times. <!-- .element: class="fragment" -->
-- Developing across frames isn't bad but it's not fun. <!-- .element: class="fragment" -->
-
-Notes:
-
-- To compare solutions, let's consider iFrames. We should be able to split our app up that way, right?
-- Instead of a single web app stitched together from smaller web apps, we have a bunch of web apps running in the same window.
-- It splits up our code, but at a cost:
-  - (next)
-  - It can be hard to share things between the parent and child iframes
-    - Context of who the user is
-    - Current URL.
-  - (next)
-  - It can be heavy, and depending on how big the app is behind the iframe, slow.
-  - (next)
-  - The developer experience isn't awful, but communicating across an iFrame boundary can be a pain.
-  - It’s more limited in what a micro frontend can be.
-- I won’t get into iFrames today, but if you want to, give it a try! It’s a super easy way to start playing with these ideas.
-
----
-
-<!-- .slide: data-auto-animate -->
+<!-- .slide: data-auto-animate data-auto-animate-id="module-federation" -->
 
 ## Module Federation
 
 Notes:
 
-- But let's talk about a different solution.
+- So how do we accomplish that?
+- There's a couple different ways, but I'm going to talk about an approach using Module Federation.
 
 ---
 
-<!-- .slide: data-auto-animate -->
+<!-- .slide: data-auto-animate data-auto-animate-id="module-federation" -->
 
 ## Module Federation
 
@@ -247,13 +227,12 @@ https://module-federation.github.io/
 
 Notes:
 
-- I'm going to take a pretty quick pass through the ideas of Module Federation, but if you want to learn more,
-  I suggest checking out their Github organization.
+- This won't be a full tutorial, but if you want to learn more, I suggest checking out their Github organization.
 - You can find support for even more tools there.
 
 ---
 
-<!-- .slide: data-auto-animate -->
+<!-- .slide: data-auto-animate data-auto-animate-id="module-federation" -->
 
 ## Webpack
 
@@ -263,7 +242,7 @@ Notes:
 
 Notes:
 
-- Today, though, let's focus on Webpack. It's what I'm most familiar with, and I think the concepts are going to be pretty transferrable.
+- Today, though, let's focus on Webpack Module Federation. It's what I'm most familiar with, and I think the concepts are going to be pretty transferrable.
 - (next)
 - And because I haven't narrowed my focus enough, let's focus specifically on React web applications.
 - Not to worry - if you don't use React, a lot of these concepts can still apply to you. It's all just Javascript modules!
@@ -307,62 +286,55 @@ Notes:
 
 ---
 
-## Move Things Around
+<!-- .slide: data-visibility="hidden" -->
 
-```sh
-mv src/index.tsx src/bootstrap/local.tsx
+## App Structure
+
+```sh [|8-10|14]
+.
+├── package-lock.json
+├── package.json
+├── public
+│   └── ...
+├── src
+│   ├── App.tsx
+│   ├── bootstrap
+│   │   ├── app.tsx # only in our remote apps
+│   │   └── local.tsx # our old index.tsx
+│   ├── components
+│   │   └── ...
+│   ├── index.css
+│   └── index.ts # loads bootstrap/local.tsx
+└── tsconfig.json
 ```
 
 Notes:
 
-- We need to make some tweaks to the standard CRA app structure.
-- Since our apps are going to have multiple entrypoints, bundling everything into `index.tsx` doesn't make sense.
-- Let's create a `bootstrap` directory that we can use to hold all our entrypoints.
-- Now, our original "run this app" index.tsx is just our "local" entrypoint.
-
----
-
-## Create Room For Magic
-
-```ts [|,3]
-// src/index.ts
-
-import("./bootstrap/local").catch((e) => console.error(e));
-
-// magic 🪄
-
-export {};
-```
-
-Notes:
-
-- Then, since Create-React-App still wants a standard entrypoint for local development, let's give it one.
+- First, let's take a look at the structure of these apps.
+- This will be pretty familiar with anyone who's used Create React App before. But we did make a few changes.
 - (next)
-- But!
-  - We don't just "re-export" our entrypoint. That's important.
-  - Instead, we make it load our application async. This will be important later!
+- These files are going to be what bootstraps our app.
+  - `local.tsx` is our old `index.tsx`. It creates a new React root, and we use that for local development.
+  - `app.tsx` exposes our components in our remote apps for the host to load.
+- (next)
+- And now, `index.ts` just loads our local entrypoint.
 
 ---
 
-## Dependencies
+# Setup
 
-- `react-app-rewired`
-- `webpack-merge`
+## Entrypoints & Bootstrapping
 
 Notes:
 
-- Next, we need some dependencies to help apply some configuration.
-- `react-app-rewired` is going to let us hook into the Create React App scripts so that we don't have to "eject".
-- `webpack-merge` is going to let us easily apply our changes to the default CRA Webpack config.
+- First, let's check out how we setup the entrypoints to our app.
 
 ---
 
-<!-- .slide: data-auto-animate -->
-
-## Get Our Remotes Ready
+## Bootstrapping Remotely
 
 ```ts
-// src/bootstrap/app/tsx
+// src/bootstrap/app.tsx
 
 import { App } from "../App";
 
@@ -371,21 +343,88 @@ export default App;
 
 Notes:
 
-- Earlier, we created our "local" entrypoint that mounted the app and ran it.
-- Our remote doesn't need to mount itself, though! The host will do that.
-- So, we need a new entrypoint for our host app to use.
-- Notice this one is just our app that we export.
-  - We don't want to include providers in here. We want it as basic as possible!
+- First off, the `app` entrypoint.
+- We don't want our remote apps to create the React root and bootstrap themselves.
+- So, this entrypoint doesn't. It just exports the component we want to expose.
+- We want it as basic as possible!
   - If we wrap our App with providers here, they'll cover up the ones from the host.
 
 ---
 
-<!-- .slide: data-auto-animate -->
+<!-- .slide: data-auto-animate data-auto-animate-id="bootstrapping-locally" -->
+
+## Bootstrapping Locally
+
+```tsx []
+// src/bootstrap/local.tsx
+
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { App } from "../App";
+import "../index.css";
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+```
+
+Notes:
+
+- Next, our `local` entrypoint.
+- There's not much to discuss here. This is just the standard CRA `index.tsx` file, moved & renamed.
+  - It imports the App, creates the root, and renders it.
+
+---
+
+<!-- .slide: data-auto-animate data-auto-animate-id="bootstrapping-locally" -->
+
+## Bootstrapping Locally
+
+```tsx [|3-4|6-8]
+// src/index.ts
+
+// ❌ This won't work once we turn on Module Federation!
+// import "./bootstrap/local";
+
+// 🪄 magic
+// Import the component, create the React root, render...
+import("./bootstrap/local").catch((e) => console.error(e));
+
+// TS wants an import, export, or an
+// empty 'export {}' statement to make it a module.
+export {};
+```
+
+Notes:
+
+- But how we use it changed.
+- (next)
+- We don't just import the entrypoint. That's important.
+  - This would work without Module Federation, but with it, we will just get a blank screen.
+- (next)
+- Instead, we make it load our entrypoint asynchronously. This will be important later!
+
+---
+
+# Setup
+
+## Configure Webpack
+
+---
 
 ## Get Our Remotes Ready
 
+```sh
+npm i react-app-rewired webpack-merge
+```
+
+<div style="font-size: 35px">
+
 ```js [|10,15|11|16|17-19|20-30]
-/* config-overrides.js */
+// config-overrides.js
 
 const { merge } = require("webpack-merge");
 const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
@@ -421,6 +460,8 @@ module.exports = function override(config) {
 };
 ```
 
+</div>
+
 Notes:
 
 - Now that we have `react-app-rewired` installed, we need to install our configuration overrides.
@@ -436,7 +477,195 @@ Notes:
     - Here's our `app` entrypoint from the previous step!
   - (next)
   - Finally, we declared the dependencies that this remote "shares".
-    - Let's talk about that.
+    - These are the reason why our local entrypoint needs to be loaded async!
+    - We'll see what these are about in a bit.
+
+---
+
+## Get Our Host Ready
+
+```sh
+npm i react-app-rewired webpack-merge
+```
+
+<div style="font-size: 35px">
+
+```js [|15-25|11-14]
+// config-overrides.js
+
+const { merge } = require("webpack-merge");
+const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
+const { dependencies } = require("./package.json");
+
+module.exports = function override(config) {
+  return merge(config, {
+    plugins: [
+      new ModuleFederationPlugin({
+        remotes: {
+          remote_app_1: "remote_app_1@http://localhost:3001/remoteEntry.js",
+          remote_app_2: "remote_app_2@http://localhost:3002/remoteEntry.js",
+        },
+        shared: {
+          ...dependencies,
+          react: {
+            singleton: true,
+            requiredVersion: dependencies["react"],
+          },
+          "react-dom": {
+            singleton: true,
+            requiredVersion: dependencies["react-dom"],
+          },
+        },
+      }),
+    ],
+  });
+};
+```
+
+</div>
+
+Notes:
+
+- Alright. Home stretch. Our remotes are done, let's look at the host.
+- There's a bit less config here.
+  - (next)
+  - We've got the same shared dependencies again.
+  - (next)
+  - But this is the fun bit. Here we declare what remote apps this project can access.
+
+---
+
+<!-- .slide: data-auto-animate data-auto-animate-id="remote-url" -->
+
+## Remote URL
+
+```text
+remote_app_1@http://localhost:3001/remoteEntry.js
+```
+
+Notes:
+
+- Let's take a closer look.
+- This path that we use here, we actually build this up out of the configuration we use in the remote.
+
+---
+
+<!-- .slide: data-auto-animate data-auto-animate-id="remote-url" -->
+
+## Remote URL
+
+```text
+remote_app_1@http://localhost:3001/remoteEntry.js
+```
+
+```text
+{name}@{publicPath}{filename}
+```
+
+<div style="font-size: 35px">
+
+```js [11,15,16]
+// config-overrides.js
+
+const { merge } = require("webpack-merge");
+const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
+const { dependencies } = require("./package.json");
+
+module.exports = function override(config) {
+  return merge(config, {
+    output: {
+      uniqueName: "remote_app_1",
+      publicPath: "http://localhost:3001/",
+    },
+    plugins: [
+      new ModuleFederationPlugin({
+        name: "remote_app_1",
+        filename: "remoteEntry.js",
+        exposes: {
+          "./App": "./src/bootstrap/app",
+        },
+        shared: {
+          ...dependencies,
+          react: {
+            singleton: true,
+            requiredVersion: dependencies["react"],
+          },
+          "react-dom": {
+            singleton: true,
+            requiredVersion: dependencies["react-dom"],
+          },
+        },
+      }),
+    ],
+  });
+};
+```
+
+</div>
+
+Notes:
+
+- The `name` is our "username" in the URL
+- The `publicPath` becomes the base of our URL
+- And the `filename` becomes the file we append to the base.
+
+---
+
+# Do it!
+
+---
+
+<!-- .slide: data-auto-animate data-auto-animate-id="get-our-host-ready" -->
+
+## Render Our Remote
+
+<div style="font-size: 35px;">
+
+```tsx [|1|3-7|3,7|4,6|5]
+const Remote1App = React.lazy(() => import("remote_app_1/App"));
+
+<ErrorBoundary fallback={<h1>🤷</h1>}>
+  <React.Suspense fallback={<CircularProgress />}>
+    <Remote1App />
+  </React.Suspense>
+</ErrorBoundary>;
+```
+
+</div>
+
+Notes:
+
+- Awesome. Now we're ready to use it!
+- (next)
+- First, we import it. The module we import is "name of remote in webpack" / "name of exposed component"
+  - The `React.lazy` is important here, too. With this, we'll only fetch the remote bundle when we need to render it.
+- (next)
+- Then we use it!
+  - (next)
+  - We wrap the whole thing in an error boundary in case the component fails to load.
+  - (next)
+  - We wrap it in Suspense too, so that we can display a spinner while it loads.
+  - (next)
+  - And then we just render the component.
+    - We're just rendering it as-is, but this is a fully fledged React component! You can pass props, you can wrap it in other components, you can do whatever you like.
+
+---
+
+<!-- .slide: data-background-color="white" data-background-iframe="https://host-app-mfe-example-salockhart.fly.dev/remote1" data-preload -->
+
+# 🎉 🎉 🎉 <!-- .element: class="fragment fade-out" -->
+
+Notes:
+
+- And it Just Works™️
+- (next)
+- And not only does it work, but we get some amazing benefits.
+  - First off, our host-app provides an MUI theme. And if the theme changes in the host, it changes the remotes, too!
+  - Now think, what if we had a shared React Query context? Or a shared React Router context? We'd be able to do a ton of really powerful things, all with different apps!
+
+---
+
+# Sharing Dependencies
 
 ---
 
@@ -466,67 +695,72 @@ Notes:
 
 ---
 
-<div style="display: grid; grid-template-columns: 1fr 1fr; font-size: 30px;">
-  <div>
-    Module Federation ❌
-    <pre>
-      <code data-trim data-noescape data-line-numbers="|8|7" class="language-sh">
-        build
-        ├── index.html
-        └── static
-            ├── css
-            │   └── main.8a685450.css
-            └── js
-                ├── 787.83a184bd.chunk.js
-                └── main.d2804cea.js
-      </code>
-    </pre>
-  </div>
-  <div>
-    Module Federation + Sharing ✅
-    <pre>
-      <code data-trim data-noescape data-line-numbers="|21|7-20" class="language-sh">
-        build
-        ├── index.html
-        └── static
-            ├── css
-            │   └── 735.19f42a5c.chunk.css
-            └── js
-                ├── 164.d173b888.chunk.js
-                ├── 184.658dae2a.chunk.js
-                ├── 192.eeafc2fa.chunk.js
-                ├── 225.77016a9a.chunk.js
-                ├── 357.e948afb0.chunk.js
-                ├── 361.5b8c06a6.chunk.js
-                ├── 677.5bffb570.chunk.js
-                ├── 702.bc15c451.chunk.js
-                ├── 73.23dbfaa2.chunk.js
-                ├── 735.693974f1.chunk.js
-                ├── 783.97111ac3.chunk.js
-                ├── 787.1912ef9c.chunk.js
-                ├── 791.6276d6ee.chunk.js
-                ├── 938.c91fb019.chunk.js
-                └── main.24d3dcb7.js
-      </code>
-    </pre>
-  </div>
+<div style="display: grid; grid-template-columns: repeat(2, 50%); font-size: 30px;">
+<div>
+
+Module Federation ❌
+
+```sh [|8|7]
+build
+├── index.html
+└── static
+    ├── css
+    │   └── main.8a685450.css
+    └── js
+        ├── 787.83a184bd.chunk.js
+        └── main.d2804cea.js
+```
+
+</div>
+<div>
+
+Module Federation + Sharing ✅
+
+```sh [|21|7-20]
+build
+├── index.html
+└── static
+    ├── css
+    │   └── 735.19f42a5c.chunk.css
+    └── js
+        ├── 164.d173b888.chunk.js
+        ├── 184.658dae2a.chunk.js
+        ├── 192.eeafc2fa.chunk.js
+        ├── 225.77016a9a.chunk.js
+        ├── 357.e948afb0.chunk.js
+        ├── 361.5b8c06a6.chunk.js
+        ├── 677.5bffb570.chunk.js
+        ├── 702.bc15c451.chunk.js
+        ├── 73.23dbfaa2.chunk.js
+        ├── 735.693974f1.chunk.js
+        ├── 783.97111ac3.chunk.js
+        ├── 787.1912ef9c.chunk.js
+        ├── 791.6276d6ee.chunk.js
+        ├── 938.c91fb019.chunk.js
+        └── main.24d3dcb7.js
+```
+
 </div>
 
 Notes:
 
 - The easiest way to illustrate this is in the build artifacts.
 - On the left hand side, we have a standard CRA output.
+  - (next)
   - We've got our main bundle with _everything_ in it
+  - (next)
   - And we've got a separate bundle that is really just the `web-vitals` package.
 - On the right hand side, through, is a different story.
+  - (next)
   - We've still got a main bundle, but it's _very_ small. Pretty much just Webpack.
+  - (next)
   - And then we've got a ton of other bundles. In fact, we've got roughly one for every dependency that we are sharing.
 - **This** is where Module Federation really shines.
   - Since each of these chunks is a dependency, we only have to load them if we need them.
   - So if either the host or the remote have a (valid) dependency already, we skip it.
   - This means we can load our remotes super fast, since they might just be our own code and no dependencies.
 
----
+Aside:
 
 ## Woah!
 
@@ -573,209 +807,6 @@ Notes:
 
 ---
 
-<!-- .slide: data-auto-animate -->
-
-## Get Our Host Ready
-
-```js [|9|18-28|14-17]
-const { merge } = require("webpack-merge");
-const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
-const { dependencies } = require("./package.json");
-
-module.exports = function override(config) {
-  return merge(config, {
-    output: {
-      uniqueName: "host_app",
-      publicPath: "http://localhost:3000/",
-    },
-    plugins: [
-      new ModuleFederationPlugin({
-        name: "host_app",
-        remotes: {
-          remote_app_1: "remote_app_1@http://localhost:3001/remoteEntry.js",
-          remote_app_2: "remote_app_2@http://localhost:3002/remoteEntry.js",
-        },
-        shared: {
-          ...dependencies,
-          react: {
-            singleton: true,
-            requiredVersion: dependencies["react"],
-          },
-          "react-dom": {
-            singleton: true,
-            requiredVersion: dependencies["react-dom"],
-          },
-        },
-      }),
-    ],
-  });
-};
-```
-
-Notes:
-
-- Alright. Home stretch. Our remotes are done, let's look at the host.
-- Most of this will be familiar. Let's go through the changes.
-  - (next)
-  - We added a public path here too.
-  - (next)
-  - And, our shared dependencies again.
-  - (next)
-  - But this is the fun bit. Here we declare what remote apps this project can access.
-
----
-
-<!-- .slide: data-auto-animate -->
-
-```text
-remote_app_1@http://localhost:3001/remoteEntry.js
-```
-
-Notes:
-
-- Let's take a closer look at that.
-- This path that we use here, we actually build this up out of the configuration we use in the remote.
-
----
-
-<!-- .slide: data-auto-animate -->
-
-```text
-remote_app_1@http://localhost:3001/remoteEntry.js
-```
-
-```js [11,15,16]
-/* config-overrides.js */
-
-const { merge } = require("webpack-merge");
-const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
-const { dependencies } = require("./package.json");
-
-module.exports = function override(config) {
-  return merge(config, {
-    output: {
-      uniqueName: "remote_app_1",
-      publicPath: "http://localhost:3001/",
-    },
-    plugins: [
-      new ModuleFederationPlugin({
-        name: "remote_app_1",
-        filename: "remoteEntry.js",
-        exposes: {
-          "./App": "./src/bootstrap/app",
-        },
-        shared: {
-          ...dependencies,
-          react: {
-            singleton: true,
-            requiredVersion: dependencies["react"],
-          },
-          "react-dom": {
-            singleton: true,
-            requiredVersion: dependencies["react-dom"],
-          },
-        },
-      }),
-    ],
-  });
-};
-```
-
-Notes:
-
-- Here, that's better. We can see now that it's really just three fields from the remote's webpack config
-  - The `name` is our "username" in the URL
-  - The `publicPath` becomes the base of our URL
-  - And the `filename` becomes the file we append to the base.
-
----
-
-<!-- .slide: data-auto-animate -->
-
-## Get Our Host Ready
-
-```js [14-17]
-const { merge } = require("webpack-merge");
-const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
-const { dependencies } = require("./package.json");
-
-module.exports = function override(config) {
-  return merge(config, {
-    output: {
-      uniqueName: "host_app",
-      publicPath: "http://localhost:3000/",
-    },
-    plugins: [
-      new ModuleFederationPlugin({
-        name: "host_app",
-        remotes: {
-          remote_app_1: "remote_app_1@http://localhost:3001/remoteEntry.js",
-          remote_app_2: "remote_app_2@http://localhost:3002/remoteEntry.js",
-        },
-        shared: {
-          ...dependencies,
-          react: {
-            singleton: true,
-            requiredVersion: dependencies["react"],
-          },
-          "react-dom": {
-            singleton: true,
-            requiredVersion: dependencies["react-dom"],
-          },
-        },
-      }),
-    ],
-  });
-};
-```
-
-Notes:
-
-- Keep in mind that we can assign these remote URLs to whatever we like.
-- Here we use the same name that the remotes declare in Webpack, but they could be anything.
-- I find it is a good practice to keep the number of names we have to remember small, though.
-
----
-
-<!-- .slide: data-auto-animate -->
-
-## Get Our Host Ready
-
-```tsx [|1|3-7|3,7|4,6|5]
-const Remote1App = React.lazy(() => import("remote_app_1/App"));
-
-<ErrorBoundary fallback={<Typography>Oops!</Typography>}>
-  <React.Suspense fallback={<CircularProgress />}>
-    <Remote1App />
-  </React.Suspense>
-</ErrorBoundary>;
-```
-
-Notes:
-
-- Awesome. Now we're ready to use it!
-- (next)
-- First, we import it. The module we import is "name of remote in webpack" / "name of exposed component"
-  - The `React.lazy` is important here, too. With this, we'll only fetch the remote bundle when we need to render it.
-- (next)
-- Then we use it!
-  - (next)
-  - We wrap the whole thing in an error boundary in case the component fails to load.
-  - (next)
-  - We wrap it in Suspense too, so that we can display a spinner while it loads.
-  - (next)
-  - And then we just render the component.
-
----
-
-<!-- .slide: data-background-color="white" data-background-iframe="https://host-app-mfe-example-salockhart.fly.dev/remote1" data-preload -->
-
-Notes:
-
-- And it Just Works™️
-
----
-
 ## Goals
 
 1. It should feel like one application <!-- .element: class="fragment" -->
@@ -804,15 +835,19 @@ Notes:
 Notes:
 
 - Finally, there are some gotchas.
+- (next)
 - You'll recall that we load the remote MFEs with a `remoteEntry.js` file.
   - It has no hash! If it did, our host couldn't find it.
-  - **But**, this means we need to be super careful that our webserver doesn't cache it.
+  - **But**, this means we need to be super careful that our webserver and our browser don't cache it.
+- (next)
 - Part of this comes up when we deploy.
   - If our host has loaded the `remoteEntry.js` file, but not the chunks, what happens if we deploy?
   - The chunks might have changed, and might not be available any more.
   - To get around this, we can either keep old versions accessible for a period of time, or we can make the host re-fetch the `remoteEntry.js` file if it fails to load a chunk.
+- (next)
 - With all these shared dependencies rolling around, we need to be careful.
   - React Router specifically wants the **same exact** version to be used across the entire runtime. Otherwise, your remotes might fail to load!
+- (next)
 - And finally, dirty contexts. If one of your remotes loads some global CSS, the rest of your app is going to see it. That can be a great thing! But it can also muck things up.
 
 ---
