@@ -852,6 +852,14 @@ Notes:
 
 ---
 
+## ✂️ Cut For Time ✂️
+
+- A Remote can be a Host, too!
+- We can federate any JS modules - not just components.
+- We can have an app made up of mixed frameworks!
+
+---
+
 ## Thank you!
 
 <div style="display: grid; grid-template-columns: repeat(2, 1fr); place-items: center;">
