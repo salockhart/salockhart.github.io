@@ -1,7 +1,7 @@
 ---
 title: Microfrontends
 reveal:
-  totalTime: 1200
+  totalTime: 1800
 ---
 
 <!-- Get the assets path, removing the trailing slash -->
@@ -20,7 +20,13 @@ reveal:
 <section data-markdown data-separator-vertical="Aside:\n">
 <textarea data-template>
 
-## Microfrontends
+<h2>
+Microfrontends
+<br />
+&
+<br />
+Module Federation
+</h2>
 
 Alex Lockhart
 
@@ -260,7 +266,7 @@ Notes:
 
 ---
 
-<!-- .slide: data-background-color="white" data-background-iframe="https://host-app-mfe-example-salockhart.fly.dev/remote1?spin=true" data-preload -->
+<!-- .slide: data-background-color="white" data-background-iframe="https://lockhart.dev/module-federation-example/host-app/#/remote1?spin=true" data-preload -->
 
 Notes:
 
@@ -269,7 +275,7 @@ Notes:
 
 ---
 
-<!-- .slide: data-background-color="white" data-background-iframe="https://remote-app-1-mfe-example-salockhart.fly.dev/" data-preload -->
+<!-- .slide: data-background-color="white" data-background-iframe="https://lockhart.dev/module-federation-example/remote-app-1/" data-preload -->
 
 Notes:
 
@@ -277,7 +283,7 @@ Notes:
 
 ---
 
-<!-- .slide: data-background-color="white" data-background-iframe="https://remote-app-2-mfe-example-salockhart.fly.dev/" data-preload -->
+<!-- .slide: data-background-color="white" data-background-iframe="https://lockhart.dev/module-federation-example/remote-app-2/" data-preload -->
 
 Notes:
 
@@ -651,7 +657,7 @@ Notes:
 
 ---
 
-<!-- .slide: data-background-color="white" data-background-iframe="https://host-app-mfe-example-salockhart.fly.dev/remote1" data-preload -->
+<!-- .slide: data-background-color="white" data-background-iframe="https://lockhart.dev/module-federation-example/host-app" data-preload -->
 
 # 🎉 🎉 🎉 <!-- .element: class="fragment fade-out" -->
 
