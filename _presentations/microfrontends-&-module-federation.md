@@ -15,6 +15,33 @@ reveal:
     grid-template-columns: repeat(3, 1fr);
     place-items: center;
   }
+
+  .one-col {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .three-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .place-center {
+    place-items: center;
+  }
+
+  .font-sm {
+    font-size: 30px;
+  }
+
+  .font-md {
+    .font-size: 35px;
+  }
 </style>
 
 <section data-markdown data-separator-vertical="Aside:\n">
@@ -36,7 +63,7 @@ Alex Lockhart
 
 ---
 
-<div style="display: grid; grid-template-columns: 1fr 1fr">
+<div class="two-col">
   <img src="{{ page_assets }}/amelia-1.jpeg" />
   <img src="{{ page_assets }}/amelia-2.jpeg" />
 </div>
@@ -81,7 +108,7 @@ Notes:
 
 ## The Problem
 
-<div class="image-container">
+<div class="three-col place-center">
   <img src="{{ page_assets }}/web-app-monolith.png" style="width: 40%; justify-self: end;" />
   <div class="r-stack" style="padding: 100px">
     <img src="{{ page_assets }}/arrow.png" />
@@ -110,24 +137,28 @@ Notes:
 ## The Problem
 
 <style>
-  .many-arrow {
+  .problem.many-arrow {
+    padding: 40px;
+  }
+
+  .problem.many-arrow img {
     width: 40%;
     position: relative; 
   }
 </style>
 
-<div class="image-container">
+<div class="three-col place-center">
   <img src="{{ page_assets }}/web-app-monolith.png" />
-  <div class="r-stack" style="padding: 40px">
-    <img src="{{ page_assets }}/arrow.png" class="many-arrow" style="top: -20px; left: -15px" />
-    <img src="{{ page_assets }}/arrow.png" class="many-arrow" style="top: 40px; left: -10px" />
-    <img src="{{ page_assets }}/arrow.png" class="many-arrow" style="top: 60px; left: 0px" />
-    <img src="{{ page_assets }}/arrow.png" class="many-arrow" style="top: -40px; left: 10px" />
-    <img src="{{ page_assets }}/arrow.png" class="many-arrow" style="top: -80px; left: 5px" />
-    <img src="{{ page_assets }}/arrow.png" class="many-arrow" style="top: 80px; left: -20px" /> 
-    <img src="{{ page_assets }}/arrow.png" class="many-arrow" style="top: 0px; left: 15px" />
-    <img src="{{ page_assets }}/arrow.png" class="many-arrow" style="top: 20px; left: -5px" />
-    <img src="{{ page_assets }}/arrow.png" class="many-arrow" style="top: -60px; left: 20px" />
+  <div class="r-stack problem many-arrow">
+    <img src="{{ page_assets }}/arrow.png" style="top: -20px; left: -15px" />
+    <img src="{{ page_assets }}/arrow.png" style="top: 40px; left: -10px" />
+    <img src="{{ page_assets }}/arrow.png" style="top: 60px; left: 0px" />
+    <img src="{{ page_assets }}/arrow.png" style="top: -40px; left: 10px" />
+    <img src="{{ page_assets }}/arrow.png" style="top: -80px; left: 5px" />
+    <img src="{{ page_assets }}/arrow.png" style="top: 80px; left: -20px" /> 
+    <img src="{{ page_assets }}/arrow.png" style="top: 0px; left: 15px" />
+    <img src="{{ page_assets }}/arrow.png" style="top: 20px; left: -5px" />
+    <img src="{{ page_assets }}/arrow.png" style="top: -60px; left: 20px" />
   </div>
   <img src="{{ page_assets }}/server-monolith.png" />
 </div>
@@ -186,18 +217,13 @@ Notes:
   .microservices.image-container img {
     width: 50%;
   }
-  .microservices.image-container .inner {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    place-items: center;
-  }
 </style>
 
 <div class="microservices image-container">
   <img src="{{ page_assets }}/web-app-monolith.png" />
   <img src="{{ page_assets }}/arrow.png" />
   <img src="{{ page_assets }}/server-blank.png" />
-  <div class="inner">
+  <div class="two-col">
     <img src="{{ page_assets }}/arrow.png" style="position: relative; top: 80px; rotate: -30deg;" />
     <img src="{{ page_assets }}/server-green.png" />
     <img src="{{ page_assets }}/arrow.png" style="position: relative; top: 20px; rotate: -15deg" />
@@ -472,7 +498,7 @@ Notes:
 npm i react-app-rewired webpack-merge
 ```
 
-<div style="font-size: 35px">
+<div class="font-md">
 
 ```js [|10,15|11|16|17-19|20-30]
 // config-overrides.js
@@ -539,7 +565,7 @@ Notes:
 npm i react-app-rewired webpack-merge
 ```
 
-<div style="font-size: 35px">
+<div class="font-md">
 
 ```js [|15-25|11-14]
 // config-overrides.js
@@ -613,7 +639,7 @@ remote_app_1@http://localhost:3001/remoteEntry.js
 {name}@{publicPath}{filename}
 ```
 
-<div style="font-size: 35px">
+<div class="font-md">
 
 ```js [11,15,16]
 // config-overrides.js
@@ -670,7 +696,7 @@ Notes:
 
 ## Render Our Remote
 
-<div style="font-size: 35px;">
+<div class="font-md">
 
 ```tsx [|1|3-7|3,7|4,6|5]
 const Remote1App = React.lazy(() => import("remote_app_1/App"));
@@ -746,7 +772,7 @@ Notes:
 
 ---
 
-<div style="display: grid; grid-template-columns: repeat(2, 50%); font-size: 30px;">
+<div class="two-col font-sm">
 <div>
 
 Module Federation ❌
@@ -913,13 +939,13 @@ Notes:
 
 ## Thank you!
 
-<div style="display: grid; grid-template-columns: repeat(2, 1fr); place-items: center;">
-  <div style="display: flex; flex-direction: column; align-items: center;">
+<div class="two-col place-center">
+  <div class="one-col place-center">
     <p>Alex Lockhart</p>
     <img src="/assets/profile.jpg" alt="a photo of the author" style="width: 200px" />
     <img src="{{ page_assets }}/logo-datasite-light.svg" style="width: 200px" />
   </div>
-  <div style="width: 100%">
+  <div class="one-col place-center" style="width: 100%">
     <a href="https://lockhart.dev">lockhart.dev</a>
     <img src="{{ page_assets }}/qr.png" style="width: 60%" />
   </div>
