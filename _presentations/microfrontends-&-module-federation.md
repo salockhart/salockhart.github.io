@@ -140,20 +140,42 @@ Notes:
 
 ## Why is this a problem?
 
-- Lots of commits to the same code <!-- .element: class="fragment" -->
 - Longer build times <!-- .element: class="fragment" -->
 - Longer load times <!-- .element: class="fragment" -->
+- Lots of commits to the same code <!-- .element: class="fragment" -->
 
 Notes:
 
 - So why is this a problem?
 - (next)
-- Well, bigger applications probably have more developers all working on the same codebase.
-- (next)
-- Bigger applications also mean longer build times, both locally and in your CI pipeline.
+- Well, bigger applications also mean longer build times, both locally and in your CI pipeline.
   - When your application takes an hour to build… you have a problem.
 - (next)
-- And, loading that giant frontend application means that your users have to wait!
+- Bigger applications also mean longer load times, which means that your users have to wait!
+- (next)
+- And, bigger applications probably mean a lot more developers all working on the same code.
+
+---
+
+## Goals
+
+1. It should feel like one application <!-- .element: class="fragment" -->
+2. It should be performant <!-- .element: class="fragment" -->
+3. It should have a great development experience <!-- .element: class="fragment" -->
+
+Notes:
+
+- Looking at what we can do in the backend, we can set some goals.
+- We want this to be a step forward, not a step back.
+  - (next)
+  - We had one application, and we want it to keep feeling like that.
+    - Just like how our microservices feel like one API!
+  - (next)
+  - We don't want a performance hit for this.
+    - Our users don't want a worse experience just so we can try fun things!
+  - (next)
+  - We want to keep our developer experience good.
+    - Otherwise, what's the point!
 
 ---
 
@@ -189,34 +211,12 @@ Notes:
 
 Notes:
 
-- We have ways of solving this on the backend. We can start splitting up our servers into a classic microservice architecture.
+- We have ways of achieving these goals on the backend. We can start splitting up our servers into a classic microservice architecture.
 - Instead of a monolith that handles EVERYTHING, we have an entrypoint and a bunch of smaller microservices that handle specific slices of our business.
 - This lets our development teams each focus on one or more individual microservices - no more giant merge conflicts because you’re in the same codebase with 100 other people.
 - These microservices are also much faster to build and deploy - instead of waiting an hour for our monolith, it might take only 10 minutes for our microservice to deploy.
 - And most importantly - if we do it right, our users will never be able to tell the difference.
 - That’s great for our backend - but what about our web app?
-
----
-
-## Goals
-
-1. It should feel like one application <!-- .element: class="fragment" -->
-2. It should be performant <!-- .element: class="fragment" -->
-3. It should have a great development experience <!-- .element: class="fragment" -->
-
-Notes:
-
-- Looking at what we can do in the backend, we can set some goals.
-- We want this to be a step forward, not a step back.
-  - (next)
-  - We had one application, and we want it to keep feeling like that.
-    - Just like how our microservices feel like one API!
-  - (next)
-  - We don't want a performance hit for this.
-    - Our users don't want a worse experience just so we can try fun things!
-  - (next)
-  - We want to keep our developer experience good.
-    - Otherwise, what's the point!
 
 ---
 
