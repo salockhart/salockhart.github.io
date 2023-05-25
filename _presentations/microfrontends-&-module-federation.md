@@ -36,6 +36,17 @@ Alex Lockhart
 
 ---
 
+<div style="display: grid; grid-template-columns: 1fr 1fr">
+  <img src="{{ page_assets }}/amelia-1.jpeg" />
+  <img src="{{ page_assets }}/amelia-2.jpeg" />
+</div>
+
+Notes:
+
+- And of course, most importantly, my partner and I have a cat named Amelia.
+
+---
+
 ## Some Assumptions
 
 - Create React App (CRA) <!-- .element: class="fragment" -->
