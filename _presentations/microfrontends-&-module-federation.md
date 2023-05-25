@@ -32,6 +32,40 @@ Alex Lockhart
 
 ---
 
+# Hi 👋
+
+---
+
+## Some Assumptions
+
+- Create React App (CRA) <!-- .element: class="fragment" -->
+- React (ReactDOM, rendering) <!-- .element: class="fragment" -->
+- Some advanced React APIs (Lazy, Error Boundaries, Suspense) <!-- .element: class="fragment" -->
+- Dependencies <!-- .element: class="fragment" -->
+- Bundlers (Webpack, plugins, singletons) <!-- .element: class="fragment" -->
+
+Notes:
+
+- We're going to talk about a lot of things today!
+- It's okay if you haven't used these things, or even heard of them before.
+- I'm going to try to explain all the important bits as we go along.
+- Knowledge of these is hopefully not necessary to understand this talk.
+- But here's a few things that will come up.
+- If you want to talk about these in-depth, come find me after the talk!
+- First, we're going to be pretty React heavy tonight. That means:
+- (next)
+- I'll be assuming you're familiar with Create React App,
+- (next)
+- and React itself, as well as
+- (next)
+- some of the more advanced React APIs like Lazy, Error Boundaries, and Suspense.
+- (next)
+- We'll also be talking about dependencies,
+- (next)
+- and how they're bundled.
+
+---
+
 <!-- .slide: data-auto-animate data-auto-animate-id="the-problem" -->
 
 ## The Problem
@@ -813,7 +847,7 @@ Notes:
 
 ---
 
-## Goals
+## Did We Meet Our Goals?
 
 1. It should feel like one application <!-- .element: class="fragment" -->
 2. It should be performant <!-- .element: class="fragment" -->
