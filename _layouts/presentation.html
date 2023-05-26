@@ -22,6 +22,7 @@
     <script src="{{ "/assets/reveal.js/plugin/notes/notes.js" | prepend: site.baseurl }}"></script>
     <script src="{{ "/assets/reveal.js/plugin/markdown/markdown.js" | prepend: site.baseurl }}"></script>
     <script src="{{ "/assets/reveal.js/plugin/highlight/highlight.js" | prepend: site.baseurl }}"></script>
+    <script src="{{ "/assets/qrcode.js/qrcode.min.js" | prepend: site.baseurl }}"></script>
 
     <script>
       // More info about initialization & config:
@@ -36,6 +37,14 @@
 
         // Learn about plugins: https://revealjs.com/plugins/
         plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
+      }).then(() => {
+        document.querySelectorAll('[data-qr-code]').forEach((el) => {
+          const text = el.dataset.qrCode;
+          new QRCode(el, {
+            text: text.startsWith("/") ? window.location.origin + text : text,
+            correctLevel: QRCode.CorrectLevel.L
+          })
+        });
       });
     </script>
   </body>

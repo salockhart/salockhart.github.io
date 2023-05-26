@@ -43,6 +43,11 @@ reveal:
   .fragment.semi-fade-out-then-in.current-fragment {
     opacity: .5;
   }
+
+  [data-qr-code] img {
+    padding: 16px;
+    background: white;
+  }
 </style>
 
 <section data-markdown data-separator-vertical="Aside:\n">
@@ -988,7 +993,7 @@ Notes:
   </div>
   <div class="one-col place-center" style="width: 100%">
     <a href="https://lockhart.dev">lockhart.dev</a>
-    <img src="{{ page_assets }}/qr.png" style="width: 60%" />
+    <div data-qr-code="{% post_url 2023-05-21-microfrontends-&-module-federation %}" />
   </div>
 </div>
 
