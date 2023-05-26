@@ -9,13 +9,6 @@ reveal:
 {% assign page_assets = page.url | prepend: '/assets' | split: '/' | join: '/' %}
 
 <style>
-  .image-container {
-    height: 100%;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    place-items: center;
-  }
-
   .one-col {
     display: grid;
     grid-template-columns: 1fr;
@@ -41,6 +34,14 @@ reveal:
 
   .font-md {
     .font-size: 35px;
+  }
+
+  .fragment.semi-fade-out-then-in {
+    opacity: 1;
+  }
+
+  .fragment.semi-fade-out-then-in.current-fragment {
+    opacity: .5;
   }
 </style>
 
@@ -211,19 +212,16 @@ Notes:
 ---
 
 <style>
-  .microservices.image-container {
-    grid-template-columns: repeat(3, 1fr) 2fr;
-  }
-  .microservices.image-container img {
+  .microservices-diagram img {
     width: 50%;
   }
 </style>
 
-<div class="microservices image-container">
+<div class="microservices-diagram place-center" style="display: grid; grid-template-columns: repeat(3, 1fr) 2fr;">
   <img src="{{ page_assets }}/web-app-monolith.png" />
   <img src="{{ page_assets }}/arrow.png" />
   <img src="{{ page_assets }}/server-blank.png" />
-  <div class="two-col">
+  <div class="two-col place-center">
     <img src="{{ page_assets }}/arrow.png" style="position: relative; top: 80px; rotate: -30deg;" />
     <img src="{{ page_assets }}/server-green.png" />
     <img src="{{ page_assets }}/arrow.png" style="position: relative; top: 20px; rotate: -15deg" />
@@ -282,6 +280,49 @@ Notes:
 - We could even call them.... **Microfrontends**
 - (next)
 - Or for short, MFEs
+
+---
+
+{% assign mfe_diagram_group_1 = 'data-fragment-index="1" class="fragment custom semi-fade-out-then-in"' %}
+{% assign mfe_diagram_group_2 = 'data-fragment-index="2" class="fragment semi-fade-out"' %}
+{% assign mfe_diagram_group_none = 'data-fragment-index="1" class="fragment semi-fade-out"' %}
+
+<style>
+  .mfe-diagram img {
+    width: 50%;
+  }
+</style>
+
+<div class="mfe-diagram place-center" style="display: grid; grid-template-columns: 1fr 3fr 1fr 1fr;">
+  <img src="{{ page_assets }}/web-app-blank.png" {{ mfe_diagram_group_2 }} style="width: 100%;" />
+  <div class="three-col place-center">
+    <img src="{{ page_assets }}/arrow.png" {{ mfe_diagram_group_none }} style="position: relative; top: 60px; rotate: -30deg;" />
+    <img src="{{ page_assets }}/web-app-green.png" {{ mfe_diagram_group_1 }} style="width: 75%;" />
+    <img src="{{ page_assets }}/arrow.png" {{ mfe_diagram_group_none }} style="position: relative; top: 60px; rotate: 30deg;" />
+    <img src="{{ page_assets }}/arrow.png" {{ mfe_diagram_group_none }} />
+    <img src="{{ page_assets }}/web-app-yellow.png" {{ mfe_diagram_group_1 }} style="width: 75%;"  />
+    <img src="{{ page_assets }}/arrow.png" {{ mfe_diagram_group_none }} />
+    <img src="{{ page_assets }}/arrow.png" {{ mfe_diagram_group_none }} style="position: relative; bottom: 60px; rotate: 30deg;" />
+    <img src="{{ page_assets }}/web-app-red-blue.png" {{ mfe_diagram_group_1 }} style="width: 75%;" />
+    <img src="{{ page_assets }}/arrow.png" {{ mfe_diagram_group_none }} style="position: relative; bottom: 60px; rotate: -30deg;" />
+  </div>
+  <img src="{{ page_assets }}/server-blank.png" {{ mfe_diagram_group_none }} />
+  <img src="{{ page_assets }}/arrow.png" {{ mfe_diagram_group_none }} />
+</div>
+
+Notes:
+
+- So how would this work?
+- Well, if we follow the general pattern of the microservices, we'd have...
+- (next)
+- A main entrypoint into our application. Let's call this the **host**.
+  - It's going to be as lean as possible.
+  - It's going to be responsible for bootstrapping our application in the browser.
+  - It's going to be responsible for loading the rest of our application.
+- (next)
+- And the rest of our application is going to be made up of all those slices we made. Let's call these **remotes**.
+  - They're going to be responsible for exporting modules that our host can load.
+  - They're going to be responsible for all of our business logic.
 
 ---
 
