@@ -1020,7 +1020,7 @@ Notes:
   </div>
   <div class="one-col place-center" style="width: 100%">
     <a href="https://lockhart.dev">lockhart.dev</a>
-    <div data-qr-code="{% post_url 2023-05-21-microfrontends-&-module-federation %}" />
+    <div data-qr-code="{% post_url 2023-05-21-microfrontends-and-module-federation %}" />
   </div>
 </div>
 

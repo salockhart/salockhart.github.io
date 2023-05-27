@@ -4,5 +4,5 @@ It was also a great opportunity too to get some slides together explaining how t
 
 Speaking of which:
 
-- The slides can be found [here](/presentations/microfrontends-&-module-federation?showNotes=true).
+- The slides can be found [here](/presentations/microfrontends-and-module-federation?showNotes=true).
 - The code can be found [here](https://github.com/salockhart/module-federation-example).
