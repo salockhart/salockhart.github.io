@@ -328,6 +328,7 @@ Notes:
 - And the rest of our application is going to be made up of all those slices we made. Let's call these **remotes**.
   - They're going to be responsible for exporting modules that our host can load.
   - They're going to be responsible for all of our business logic.
+- So how do we stitch these together?
 
 ---
 
@@ -337,7 +338,6 @@ Notes:
 
 Notes:
 
-- So how do we accomplish that?
 - There's a couple different ways, but I'm going to talk about an approach using Module Federation.
 
 ---
@@ -365,7 +365,12 @@ Notes:
 
 Notes:
 
-- Today, though, let's focus on Webpack Module Federation. It's what I'm most familiar with, and I think the concepts are going to be pretty transferrable.
+- Today, though, let's focus on Webpack Module Federation.
+  - I know: Webpack! Why not vite or esbuild or snowpack or rollup or...
+  - Module Federation was first introduced in Webpack 5.
+  - It's since been ported to other bundlers.
+  - It's what I'm most familiar with.
+  - And I promise, a lot of the config we go over will be transferrable to other bundlers.
 - (next)
 - And because I haven't narrowed my focus enough, let's focus specifically on React web applications.
 - Not to worry - if you don't use React, a lot of these concepts can still apply to you. It's all just Javascript modules!
@@ -376,10 +381,10 @@ Notes:
 
 Notes:
 
-- I'm going to go through some of the major steps to get setup with Module Federation.
+- Before we can setup Module Federation, we need some apps!
 - We're going to create a single host app and two remote apps.
 - And as much as I'm sure you'd love to watch me live code three apps... I'm going to skip that bit.
-- But, I'll make all the slides and code available at the end.
+- But, all the slides and code will be available at the end.
 
 ---
 
@@ -409,44 +414,9 @@ Notes:
 
 ---
 
-<!-- .slide: data-visibility="hidden" -->
-
-## App Structure
-
-```sh [|8-10|14]
-.
-├── package-lock.json
-├── package.json
-├── public
-│   └── ...
-├── src
-│   ├── App.tsx
-│   ├── bootstrap
-│   │   ├── app.tsx # only in our remote apps
-│   │   └── local.tsx # our old index.tsx
-│   ├── components
-│   │   └── ...
-│   ├── index.css
-│   └── index.ts # loads bootstrap/local.tsx
-└── tsconfig.json
-```
-
-Notes:
-
-- First, let's take a look at the structure of these apps.
-- This will be pretty familiar with anyone who's used Create React App before. But we did make a few changes.
-- (next)
-- These files are going to be what bootstraps our app.
-  - `local.tsx` is our old `index.tsx`. It creates a new React root, and we use that for local development.
-  - `app.tsx` exposes our components in our remote apps for the host to load.
-- (next)
-- And now, `index.ts` just loads our local entrypoint.
-
----
-
 # Setup
 
-## Entrypoints & Bootstrapping
+## Remotes
 
 Notes:
 
@@ -454,7 +424,75 @@ Notes:
 
 ---
 
-## Bootstrapping Remotely
+## Remote Webpack Config
+
+```sh
+npm i react-app-rewired webpack-merge
+```
+
+<div class="font-md">
+
+```js [|10,15|11|16|17-19]
+// config-overrides.js
+
+const { merge } = require("webpack-merge");
+const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
+const { dependencies } = require("./package.json");
+
+module.exports = function override(config) {
+  return merge(config, {
+    output: {
+      uniqueName: "remote_app_1",
+      publicPath: "http://localhost:3001/",
+    },
+    plugins: [
+      new ModuleFederationPlugin({
+        name: "remote_app_1",
+        filename: "remoteEntry.js",
+        exposes: {
+          "./App": "./src/bootstrap/app",
+        },
+        shared: {
+          ...dependencies,
+          react: {
+            singleton: true,
+            requiredVersion: dependencies["react"],
+          },
+          "react-dom": {
+            singleton: true,
+            requiredVersion: dependencies["react-dom"],
+          },
+        },
+      }),
+    ],
+  });
+};
+```
+
+</div>
+
+Notes:
+
+- Now that we have `react-app-rewired` installed, we need to install our configuration overrides.
+- Oh boy, we really added a lot here. Let's go through it.
+  - (next)
+  - First, we name this app so that Webpack can refer to it later.
+  - (next)
+  - We add a public path where this remote can be reached. For now, we'll do `localhost`.
+  - (next)
+  - Then, we added the name of the file that can be used to load this remote.
+  - (next)
+  - And finally, we get to the good bit!
+    - We declare what components we expose through that `remoteEntry.js` file
+    - Here, we're exposing an `App` component. Let's look at how we do that.
+  - (next)
+  - Finally, we declared the dependencies that this remote "shares".
+    - These are the reason why our local entrypoint needs to be loaded async!
+    - We'll see what these are about in a bit.
+
+---
+
+## Our `app` Entrypoint
 
 ```ts
 // src/bootstrap/app.tsx
@@ -466,11 +504,67 @@ export default App;
 
 Notes:
 
-- First off, the `app` entrypoint.
-- We don't want our remote apps to create the React root and bootstrap themselves.
-- So, this entrypoint doesn't. It just exports the component we want to expose.
+- The `app` entrypoint.
+- Remember: our remote apps don't create the React root nor do any bootstraping. The host does that.
+- So, this entrypoint doesn't! It just exports the component we want to expose.
 - We want it as basic as possible!
   - If we wrap our App with providers here, they'll cover up the ones from the host.
+
+---
+
+## Remote Webpack Config
+
+```sh
+npm i react-app-rewired webpack-merge
+```
+
+<div class="font-md">
+
+```js [|20-30]
+// config-overrides.js
+
+const { merge } = require("webpack-merge");
+const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
+const { dependencies } = require("./package.json");
+
+module.exports = function override(config) {
+  return merge(config, {
+    output: {
+      uniqueName: "remote_app_1",
+      publicPath: "http://localhost:3001/",
+    },
+    plugins: [
+      new ModuleFederationPlugin({
+        name: "remote_app_1",
+        filename: "remoteEntry.js",
+        exposes: {
+          "./App": "./src/bootstrap/app",
+        },
+        shared: {
+          ...dependencies,
+          react: {
+            singleton: true,
+            requiredVersion: dependencies["react"],
+          },
+          "react-dom": {
+            singleton: true,
+            requiredVersion: dependencies["react-dom"],
+          },
+        },
+      }),
+    ],
+  });
+};
+```
+
+</div>
+
+Notes:
+
+- Back to the config. There was one more section we didn't look at.
+- We declared the dependencies that this remote "shares".
+  - These are the reason why our local entrypoint needs to be loaded async!
+  - We'll see what these are about in a bit.
 
 ---
 
@@ -535,73 +629,6 @@ Notes:
 # Setup
 
 ## Configure Webpack
-
----
-
-## Get Our Remotes Ready
-
-```sh
-npm i react-app-rewired webpack-merge
-```
-
-<div class="font-md">
-
-```js [|10,15|11|16|17-19|20-30]
-// config-overrides.js
-
-const { merge } = require("webpack-merge");
-const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
-const { dependencies } = require("./package.json");
-
-module.exports = function override(config) {
-  return merge(config, {
-    output: {
-      uniqueName: "remote_app_1",
-      publicPath: "http://localhost:3001/",
-    },
-    plugins: [
-      new ModuleFederationPlugin({
-        name: "remote_app_1",
-        filename: "remoteEntry.js",
-        exposes: {
-          "./App": "./src/bootstrap/app",
-        },
-        shared: {
-          ...dependencies,
-          react: {
-            singleton: true,
-            requiredVersion: dependencies["react"],
-          },
-          "react-dom": {
-            singleton: true,
-            requiredVersion: dependencies["react-dom"],
-          },
-        },
-      }),
-    ],
-  });
-};
-```
-
-</div>
-
-Notes:
-
-- Now that we have `react-app-rewired` installed, we need to install our configuration overrides.
-- Oh boy, we really added a lot here. Let's go through it.
-  - (next)
-  - First, we name this app so that Webpack can refer to it later.
-  - (next)
-  - We add a public path where this remote can be reached. For now, we'll do `localhost`.
-  - (next)
-  - Then, we added the name of the file that can be used to load this remote.
-  - (next)
-  - We declared what components we expose through that `remoteEntry.js` file
-    - Here's our `app` entrypoint from the previous step!
-  - (next)
-  - Finally, we declared the dependencies that this remote "shares".
-    - These are the reason why our local entrypoint needs to be loaded async!
-    - We'll see what these are about in a bit.
 
 ---
 
