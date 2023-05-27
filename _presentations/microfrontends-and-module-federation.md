@@ -6,6 +6,7 @@ reveal:
 
 <!-- Get the assets path, removing the trailing slash -->
 
+{% assign page_includes = page.slug | split: '/' | join: '/' %}
 {% assign page_assets = page.url | prepend: '/assets' | split: '/' | join: '/' %}
 
 <style>
@@ -433,40 +434,7 @@ npm i react-app-rewired webpack-merge
 <div class="font-md">
 
 ```js [|10,15|11|16|17-19]
-// config-overrides.js
-
-const { merge } = require("webpack-merge");
-const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
-const { dependencies } = require("./package.json");
-
-module.exports = function override(config) {
-  return merge(config, {
-    output: {
-      uniqueName: "remote_app_1",
-      publicPath: "http://localhost:3001/",
-    },
-    plugins: [
-      new ModuleFederationPlugin({
-        name: "remote_app_1",
-        filename: "remoteEntry.js",
-        exposes: {
-          "./App": "./src/bootstrap/app",
-        },
-        shared: {
-          ...dependencies,
-          react: {
-            singleton: true,
-            requiredVersion: dependencies["react"],
-          },
-          "react-dom": {
-            singleton: true,
-            requiredVersion: dependencies["react-dom"],
-          },
-        },
-      }),
-    ],
-  });
-};
+{% include_relative {{ page_includes | append: '/code/remote-webpack-config.js' }} %}
 ```
 
 </div>
@@ -521,40 +489,7 @@ npm i react-app-rewired webpack-merge
 <div class="font-md">
 
 ```js [|20-30]
-// config-overrides.js
-
-const { merge } = require("webpack-merge");
-const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
-const { dependencies } = require("./package.json");
-
-module.exports = function override(config) {
-  return merge(config, {
-    output: {
-      uniqueName: "remote_app_1",
-      publicPath: "http://localhost:3001/",
-    },
-    plugins: [
-      new ModuleFederationPlugin({
-        name: "remote_app_1",
-        filename: "remoteEntry.js",
-        exposes: {
-          "./App": "./src/bootstrap/app",
-        },
-        shared: {
-          ...dependencies,
-          react: {
-            singleton: true,
-            requiredVersion: dependencies["react"],
-          },
-          "react-dom": {
-            singleton: true,
-            requiredVersion: dependencies["react-dom"],
-          },
-        },
-      }),
-    ],
-  });
-};
+{% include_relative {{ page_includes | append: '/code/remote-webpack-config.js' }} %}
 ```
 
 </div>
@@ -641,35 +576,7 @@ npm i react-app-rewired webpack-merge
 <div class="font-md">
 
 ```js [|15-25|11-14]
-// config-overrides.js
-
-const { merge } = require("webpack-merge");
-const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
-const { dependencies } = require("./package.json");
-
-module.exports = function override(config) {
-  return merge(config, {
-    plugins: [
-      new ModuleFederationPlugin({
-        remotes: {
-          remote_app_1: "remote_app_1@http://localhost:3001/remoteEntry.js",
-          remote_app_2: "remote_app_2@http://localhost:3002/remoteEntry.js",
-        },
-        shared: {
-          ...dependencies,
-          react: {
-            singleton: true,
-            requiredVersion: dependencies["react"],
-          },
-          "react-dom": {
-            singleton: true,
-            requiredVersion: dependencies["react-dom"],
-          },
-        },
-      }),
-    ],
-  });
-};
+{% include_relative {{ page_includes | append: '/code/host-webpack-config.js' }} %}
 ```
 
 </div>
@@ -715,40 +622,7 @@ remote_app_1@http://localhost:3001/remoteEntry.js
 <div class="font-md">
 
 ```js [11,15,16]
-// config-overrides.js
-
-const { merge } = require("webpack-merge");
-const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
-const { dependencies } = require("./package.json");
-
-module.exports = function override(config) {
-  return merge(config, {
-    output: {
-      uniqueName: "remote_app_1",
-      publicPath: "http://localhost:3001/",
-    },
-    plugins: [
-      new ModuleFederationPlugin({
-        name: "remote_app_1",
-        filename: "remoteEntry.js",
-        exposes: {
-          "./App": "./src/bootstrap/app",
-        },
-        shared: {
-          ...dependencies,
-          react: {
-            singleton: true,
-            requiredVersion: dependencies["react"],
-          },
-          "react-dom": {
-            singleton: true,
-            requiredVersion: dependencies["react-dom"],
-          },
-        },
-      }),
-    ],
-  });
-};
+{% include_relative {{ page_includes | append: '/code/remote-webpack-config.js' }} %}
 ```
 
 </div>
@@ -821,18 +695,8 @@ Notes:
 
 ## Sharing Dependencies
 
-```ts
-shared: {
-  ...dependencies,
-  react: {
-    singleton: true,
-    requiredVersion: dependencies["react"],
-  },
-  "react-dom": {
-    singleton: true,
-    requiredVersion: dependencies["react-dom"],
-  },
-}
+```ts [15-25]
+{% include_relative {{ page_includes | append: '/code/host-webpack-config.js' }} %}
 ```
 
 Notes:
