@@ -70,8 +70,8 @@ Alex Lockhart
 ---
 
 <div class="two-col">
-  <img src="{{ page_assets }}/amelia-1.jpeg" />
-  <img src="{{ page_assets }}/amelia-2.jpeg" />
+  <img src="{{ page_assets }}/img/amelia-1.jpeg" />
+  <img src="{{ page_assets }}/img/amelia-2.jpeg" />
 </div>
 
 Notes:
@@ -115,19 +115,19 @@ Notes:
 ## The Problem
 
 <div class="three-col place-center">
-  <img src="{{ page_assets }}/web-app-monolith.png" style="width: 40%; justify-self: end;" />
+  <img src="{{ page_assets }}/img/web-app-monolith.png" style="width: 40%; justify-self: end;" />
   <div class="r-stack" style="padding: 100px">
-    <img src="{{ page_assets }}/arrow.png" />
-    <img src="{{ page_assets }}/arrow.png" />
-    <img src="{{ page_assets }}/arrow.png" />
-    <img src="{{ page_assets }}/arrow.png" />
-    <img src="{{ page_assets }}/arrow.png" />
-    <img src="{{ page_assets }}/arrow.png" />
-    <img src="{{ page_assets }}/arrow.png" />
-    <img src="{{ page_assets }}/arrow.png" />
-    <img src="{{ page_assets }}/arrow.png" />
+    <img src="{{ page_assets }}/img/arrow.png" />
+    <img src="{{ page_assets }}/img/arrow.png" />
+    <img src="{{ page_assets }}/img/arrow.png" />
+    <img src="{{ page_assets }}/img/arrow.png" />
+    <img src="{{ page_assets }}/img/arrow.png" />
+    <img src="{{ page_assets }}/img/arrow.png" />
+    <img src="{{ page_assets }}/img/arrow.png" />
+    <img src="{{ page_assets }}/img/arrow.png" />
+    <img src="{{ page_assets }}/img/arrow.png" />
   </div>
-  <img src="{{ page_assets }}/server-monolith.png" style="width: 40%; justify-self: start;" />
+  <img src="{{ page_assets }}/img/server-monolith.png" style="width: 40%; justify-self: start;" />
 </div>
 
 Notes:
@@ -154,19 +154,19 @@ Notes:
 </style>
 
 <div class="three-col place-center">
-  <img src="{{ page_assets }}/web-app-monolith.png" />
+  <img src="{{ page_assets }}/img/web-app-monolith.png" />
   <div class="r-stack problem many-arrow">
-    <img src="{{ page_assets }}/arrow.png" style="top: -20px; left: -15px" />
-    <img src="{{ page_assets }}/arrow.png" style="top: 40px; left: -10px" />
-    <img src="{{ page_assets }}/arrow.png" style="top: 60px; left: 0px" />
-    <img src="{{ page_assets }}/arrow.png" style="top: -40px; left: 10px" />
-    <img src="{{ page_assets }}/arrow.png" style="top: -80px; left: 5px" />
-    <img src="{{ page_assets }}/arrow.png" style="top: 80px; left: -20px" /> 
-    <img src="{{ page_assets }}/arrow.png" style="top: 0px; left: 15px" />
-    <img src="{{ page_assets }}/arrow.png" style="top: 20px; left: -5px" />
-    <img src="{{ page_assets }}/arrow.png" style="top: -60px; left: 20px" />
+    <img src="{{ page_assets }}/img/arrow.png" style="top: -20px; left: -15px" />
+    <img src="{{ page_assets }}/img/arrow.png" style="top: 40px; left: -10px" />
+    <img src="{{ page_assets }}/img/arrow.png" style="top: 60px; left: 0px" />
+    <img src="{{ page_assets }}/img/arrow.png" style="top: -40px; left: 10px" />
+    <img src="{{ page_assets }}/img/arrow.png" style="top: -80px; left: 5px" />
+    <img src="{{ page_assets }}/img/arrow.png" style="top: 80px; left: -20px" /> 
+    <img src="{{ page_assets }}/img/arrow.png" style="top: 0px; left: 15px" />
+    <img src="{{ page_assets }}/img/arrow.png" style="top: 20px; left: -5px" />
+    <img src="{{ page_assets }}/img/arrow.png" style="top: -60px; left: 20px" />
   </div>
-  <img src="{{ page_assets }}/server-monolith.png" />
+  <img src="{{ page_assets }}/img/server-monolith.png" />
 </div>
 
 Notes:
@@ -223,18 +223,18 @@ Notes:
 </style>
 
 <div class="microservices-diagram place-center" style="display: grid; grid-template-columns: repeat(3, 1fr) 2fr;">
-  <img src="{{ page_assets }}/web-app-monolith.png" />
-  <img src="{{ page_assets }}/arrow.png" />
-  <img src="{{ page_assets }}/server-blank.png" />
+  <img src="{{ page_assets }}/img/web-app-monolith.png" />
+  <img src="{{ page_assets }}/img/arrow.png" />
+  <img src="{{ page_assets }}/img/server-blank.png" />
   <div class="two-col place-center">
-    <img src="{{ page_assets }}/arrow.png" style="position: relative; top: 80px; rotate: -30deg;" />
-    <img src="{{ page_assets }}/server-green.png" />
-    <img src="{{ page_assets }}/arrow.png" style="position: relative; top: 20px; rotate: -15deg" />
-    <img src="{{ page_assets }}/server-yellow.png" />
-    <img src="{{ page_assets }}/arrow.png" style="position: relative; bottom: 20px; rotate: 15deg" />
-    <img src="{{ page_assets }}/server-red.png" />
-    <img src="{{ page_assets }}/arrow.png" style="position: relative; bottom: 80px; rotate: 30deg" />
-    <img src="{{ page_assets }}/server-blue.png" />
+    <img src="{{ page_assets }}/img/arrow.png" style="position: relative; top: 80px; rotate: -30deg;" />
+    <img src="{{ page_assets }}/img/server-green.png" />
+    <img src="{{ page_assets }}/img/arrow.png" style="position: relative; top: 20px; rotate: -15deg" />
+    <img src="{{ page_assets }}/img/server-yellow.png" />
+    <img src="{{ page_assets }}/img/arrow.png" style="position: relative; bottom: 20px; rotate: 15deg" />
+    <img src="{{ page_assets }}/img/server-red.png" />
+    <img src="{{ page_assets }}/img/arrow.png" style="position: relative; bottom: 80px; rotate: 30deg" />
+    <img src="{{ page_assets }}/img/server-blue.png" />
   </div>
 </div>
 
@@ -252,10 +252,10 @@ Notes:
 <!-- .slide: data-auto-animate data-auto-animate-id="web-app-slices" -->
 
 <div class="r-stack">
-  <img src="{{ page_assets }}/web-app-blank.png" />
-  <img src="{{ page_assets }}/web-app-green.png" style="position: relative; bottom: 60px; right: 95px;" />
-  <img src="{{ page_assets }}/web-app-yellow.png" style="position: relative; right: 48px; top: 50px;" />
-  <img src="{{ page_assets }}/web-app-red-blue.png" style="position: relative; left: 85px;" />
+  <img src="{{ page_assets }}/img/web-app-blank.png" />
+  <img src="{{ page_assets }}/img/web-app-green.png" style="position: relative; bottom: 60px; right: 95px;" />
+  <img src="{{ page_assets }}/img/web-app-yellow.png" style="position: relative; right: 48px; top: 50px;" />
+  <img src="{{ page_assets }}/img/web-app-red-blue.png" style="position: relative; left: 85px;" />
 </div>
 
 Notes:
@@ -267,10 +267,10 @@ Notes:
 <!-- .slide: data-auto-animate data-auto-animate-id="web-app-slices" -->
 
 <div class="r-stack">
-  <img src="{{ page_assets }}/web-app-blank.png" />
-  <img src="{{ page_assets }}/web-app-green.png" style="position: relative; bottom: 100px; right: 300px;" />
-  <img src="{{ page_assets }}/web-app-yellow.png" style="position: relative; right: 300px; top: 50px;" />
-  <img src="{{ page_assets }}/web-app-red-blue.png" style="position: relative; left: 300px;" />
+  <img src="{{ page_assets }}/img/web-app-blank.png" />
+  <img src="{{ page_assets }}/img/web-app-green.png" style="position: relative; bottom: 100px; right: 300px;" />
+  <img src="{{ page_assets }}/img/web-app-yellow.png" style="position: relative; right: 300px; top: 50px;" />
+  <img src="{{ page_assets }}/img/web-app-red-blue.png" style="position: relative; left: 300px;" />
 </div>
 
 ## Microfrontends <!-- .element: class="fragment" -->
@@ -299,20 +299,20 @@ Notes:
 </style>
 
 <div class="mfe-diagram place-center" style="display: grid; grid-template-columns: 1fr 3fr 1fr 1fr;">
-  <img src="{{ page_assets }}/web-app-blank.png" {{ mfe_diagram_group_2 }} style="width: 100%;" />
+  <img src="{{ page_assets }}/img/web-app-blank.png" {{ mfe_diagram_group_2 }} style="width: 100%;" />
   <div class="three-col place-center">
-    <img src="{{ page_assets }}/arrow.png" {{ mfe_diagram_group_none }} style="position: relative; top: 60px; rotate: -30deg;" />
-    <img src="{{ page_assets }}/web-app-green.png" {{ mfe_diagram_group_1 }} style="width: 75%;" />
-    <img src="{{ page_assets }}/arrow.png" {{ mfe_diagram_group_none }} style="position: relative; top: 60px; rotate: 30deg;" />
-    <img src="{{ page_assets }}/arrow.png" {{ mfe_diagram_group_none }} />
-    <img src="{{ page_assets }}/web-app-yellow.png" {{ mfe_diagram_group_1 }} style="width: 75%;"  />
-    <img src="{{ page_assets }}/arrow.png" {{ mfe_diagram_group_none }} />
-    <img src="{{ page_assets }}/arrow.png" {{ mfe_diagram_group_none }} style="position: relative; bottom: 60px; rotate: 30deg;" />
-    <img src="{{ page_assets }}/web-app-red-blue.png" {{ mfe_diagram_group_1 }} style="width: 75%;" />
-    <img src="{{ page_assets }}/arrow.png" {{ mfe_diagram_group_none }} style="position: relative; bottom: 60px; rotate: -30deg;" />
+    <img src="{{ page_assets }}/img/arrow.png" {{ mfe_diagram_group_none }} style="position: relative; top: 60px; rotate: -30deg;" />
+    <img src="{{ page_assets }}/img/web-app-green.png" {{ mfe_diagram_group_1 }} style="width: 75%;" />
+    <img src="{{ page_assets }}/img/arrow.png" {{ mfe_diagram_group_none }} style="position: relative; top: 60px; rotate: 30deg;" />
+    <img src="{{ page_assets }}/img/arrow.png" {{ mfe_diagram_group_none }} />
+    <img src="{{ page_assets }}/img/web-app-yellow.png" {{ mfe_diagram_group_1 }} style="width: 75%;"  />
+    <img src="{{ page_assets }}/img/arrow.png" {{ mfe_diagram_group_none }} />
+    <img src="{{ page_assets }}/img/arrow.png" {{ mfe_diagram_group_none }} style="position: relative; bottom: 60px; rotate: 30deg;" />
+    <img src="{{ page_assets }}/img/web-app-red-blue.png" {{ mfe_diagram_group_1 }} style="width: 75%;" />
+    <img src="{{ page_assets }}/img/arrow.png" {{ mfe_diagram_group_none }} style="position: relative; bottom: 60px; rotate: -30deg;" />
   </div>
-  <img src="{{ page_assets }}/server-blank.png" {{ mfe_diagram_group_none }} />
-  <img src="{{ page_assets }}/arrow.png" {{ mfe_diagram_group_none }} />
+  <img src="{{ page_assets }}/img/server-blank.png" {{ mfe_diagram_group_none }} />
+  <img src="{{ page_assets }}/img/arrow.png" {{ mfe_diagram_group_none }} />
 </div>
 
 Notes:
@@ -989,7 +989,7 @@ Notes:
   <div class="one-col place-center">
     <p>Alex Lockhart</p>
     <img src="/assets/profile.jpg" alt="a photo of the author" style="width: 200px" />
-    <img src="{{ page_assets }}/logo-datasite-light.svg" style="width: 200px" />
+    <img src="{{ page_assets }}/img/logo-datasite-light.svg" style="width: 200px" />
   </div>
   <div class="one-col place-center" style="width: 100%">
     <a href="https://lockhart.dev">lockhart.dev</a>
