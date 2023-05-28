@@ -51,7 +51,7 @@ reveal:
   }
 </style>
 
-<section data-markdown data-separator-vertical="Aside:\n">
+<section data-markdown>
 <textarea data-template>
 
 <h2>
@@ -67,6 +67,14 @@ Alex Lockhart
 ---
 
 # Hi 👋
+
+Notes:
+
+- Before we get into things, let me introduce myself.
+- Hi, I'm Alex.
+- I grew up here in Halifax, and I've been working as a Software Developer for just about 7 years now.
+- I even worked at REDSpace for just under a year!
+- I spent the last few years in the UK working, before coming back to Halifax last year.
 
 ---
 
@@ -374,7 +382,7 @@ Notes:
   - And I promise, a lot of the config we go over will be transferrable to other bundlers.
 - (next)
 - And because I haven't narrowed my focus enough, let's focus specifically on React web applications.
-- Not to worry - if you don't use React, a lot of these concepts can still apply to you. It's all just Javascript modules!
+  - Not to worry - if you don't use React, a lot of these concepts can still apply to you. It's all just Javascript modules!
 
 ---
 
@@ -421,7 +429,7 @@ Notes:
 
 Notes:
 
-- First, let's check out how we setup the entrypoints to our app.
+- First, let's check out how we configure our remotes.
 
 ---
 
@@ -441,29 +449,24 @@ npm i react-app-rewired webpack-merge
 
 Notes:
 
-- Now that we have `react-app-rewired` installed, we need to install our configuration overrides.
-- Oh boy, we really added a lot here. Let's go through it.
+- There's a lot here! Let's break it down.
   - (next)
   - First, we name this app so that Webpack can refer to it later.
   - (next)
-  - We add a public path where this remote can be reached. For now, we'll do `localhost`.
+  - We add a public path where this remote can be reached from the browser. For now, we'll do `localhost`.
   - (next)
   - Then, we added the name of the file that can be used to load this remote.
   - (next)
   - And finally, we get to the good bit!
-    - We declare what components we expose through that `remoteEntry.js` file
+    - We declare what components we expose through that `remoteEntry.js` file.
     - Here, we're exposing an `App` component. Let's look at how we do that.
-  - (next)
-  - Finally, we declared the dependencies that this remote "shares".
-    - These are the reason why our local entrypoint needs to be loaded async!
-    - We'll see what these are about in a bit.
 
 ---
 
-## Our `app` Entrypoint
+## `remote` Entrypoint
 
-```ts
-// src/bootstrap/app.tsx
+```ts [|5]
+// src/bootstrap/remote.tsx
 
 import { App } from "../App";
 
@@ -472,23 +475,21 @@ export default App;
 
 Notes:
 
-- The `app` entrypoint.
+- The `remote` entrypoint!
 - Remember: our remote apps don't create the React root nor do any bootstraping. The host does that.
 - So, this entrypoint doesn't! It just exports the component we want to expose.
 - We want it as basic as possible!
   - If we wrap our App with providers here, they'll cover up the ones from the host.
+- (next)
+- And we want to make this a default export. Named exports can work too, but they're a bit more work to setup.
 
 ---
 
 ## Remote Webpack Config
 
-```sh
-npm i react-app-rewired webpack-merge
-```
-
 <div class="font-md">
 
-```js [|20-30]
+```js [20-30]
 {% include_relative {{ page_includes | append: '/code/remote-webpack-config.js' }} %}
 ```
 
@@ -498,130 +499,39 @@ Notes:
 
 - Back to the config. There was one more section we didn't look at.
 - We declared the dependencies that this remote "shares".
-  - These are the reason why our local entrypoint needs to be loaded async!
-  - We'll see what these are about in a bit.
+  - Let's take a look at what this means.
 
 ---
 
-<!-- .slide: data-auto-animate data-auto-animate-id="bootstrapping-locally" -->
+## Dependencies
 
-## Bootstrapping Locally
+<div class="font-sm">
 
-```tsx []
-// src/bootstrap/local.tsx
-
-import React from "react";
-import ReactDOM from "react-dom/client";
-import { App } from "../App";
-import "../index.css";
-
-const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
-```
-
-Notes:
-
-- Next, our `local` entrypoint.
-- There's not much to discuss here. This is just the standard CRA `index.tsx` file, moved & renamed.
-  - It imports the App, creates the root, and renders it.
-
----
-
-<!-- .slide: data-auto-animate data-auto-animate-id="bootstrapping-locally" -->
-
-## Bootstrapping Locally
-
-```tsx [|3-4|6-8]
-// src/index.ts
-
-// ❌ This won't work once we turn on Module Federation!
-// import "./bootstrap/local";
-
-// 🪄 magic
-// Import the component, create the React root, render...
-import("./bootstrap/local").catch((e) => console.error(e));
-
-// TS wants an import, export, or an
-// empty 'export {}' statement to make it a module.
-export {};
-```
-
-Notes:
-
-- But how we use it changed.
-- (next)
-- We don't just import the entrypoint. That's important.
-  - This would work without Module Federation, but with it, we will just get a blank screen.
-- (next)
-- Instead, we make it load our entrypoint asynchronously. This will be important later!
-
----
-
-# Setup
-
-## Configure Webpack
-
----
-
-## Get Our Host Ready
-
-```sh
-npm i react-app-rewired webpack-merge
-```
-
-<div class="font-md">
-
-```js [|15-25|11-14]
-{% include_relative {{ page_includes | append: '/code/host-webpack-config.js' }} %}
+```json [6-26]
+{% include_relative {{ page_includes | append: '/code/remote-package.json' }} %}
 ```
 
 </div>
 
 Notes:
 
-- Alright. Home stretch. Our remotes are done, let's look at the host.
-- There's a bit less config here.
-  - (next)
-  - We've got the same shared dependencies again.
-  - (next)
-  - But this is the fun bit. Here we declare what remote apps this project can access.
+- Here's the package.json for one of our remote apps.
+- Like you can see here, we've got a lot of dependencies!
+  - React, React DOM, ...
+  - But also some others, like Material UI.
+- Each of these dependencies represents "someone else's code" that we are using.
+- They also tend to make up the bulk of our app's bundle size.
+- And the bigger our bundle size, the more our users need to download before using our app!
+- But wait.. if we have three different apps, aren't we tripling the number of times we need to download our dependencies?
+  - This is what sharing is for!
 
 ---
 
-<!-- .slide: data-auto-animate data-auto-animate-id="remote-url" -->
-
-## Remote URL
-
-```text
-remote_app_1@http://localhost:3001/remoteEntry.js
-```
-
-Notes:
-
-- Let's take a closer look.
-- This path that we use here, we actually build this up out of the configuration we use in the remote.
-
----
-
-<!-- .slide: data-auto-animate data-auto-animate-id="remote-url" -->
-
-## Remote URL
-
-```text
-remote_app_1@http://localhost:3001/remoteEntry.js
-```
-
-```text
-{name}@{publicPath}{filename}
-```
+## Sharing Dependencies
 
 <div class="font-md">
 
-```js [11,15,16]
+```js [20-30|5|20-30]
 {% include_relative {{ page_includes | append: '/code/remote-webpack-config.js' }} %}
 ```
 
@@ -629,83 +539,11 @@ remote_app_1@http://localhost:3001/remoteEntry.js
 
 Notes:
 
-- The `name` is our "username" in the URL
-- The `publicPath` becomes the base of our URL
-- And the `filename` becomes the file we append to the base.
-
----
-
-# Do it!
-
----
-
-<!-- .slide: data-auto-animate data-auto-animate-id="get-our-host-ready" -->
-
-## Render Our Remote
-
-<div class="font-md">
-
-```tsx [|1|3-7|3,7|4,6|5]
-const Remote1App = React.lazy(() => import("remote_app_1/App"));
-
-<ErrorBoundary fallback={<h1>🤷</h1>}>
-  <React.Suspense fallback={<CircularProgress />}>
-    <Remote1App />
-  </React.Suspense>
-</ErrorBoundary>;
-```
-
-</div>
-
-Notes:
-
-- Awesome. Now we're ready to use it!
+- Right. We've got our sharing config in our webpack file.
 - (next)
-- First, we import it. The module we import is "name of remote in webpack" / "name of exposed component"
-  - The `React.lazy` is important here, too. With this, we'll only fetch the remote bundle when we need to render it.
+- And we are importing the dependencies we want to share from our package.json, essentially saying "share everything."
 - (next)
-- Then we use it!
-  - (next)
-  - We wrap the whole thing in an error boundary in case the component fails to load.
-  - (next)
-  - We wrap it in Suspense too, so that we can display a spinner while it loads.
-  - (next)
-  - And then we just render the component.
-    - We're just rendering it as-is, but this is a fully fledged React component! You can pass props, you can wrap it in other components, you can do whatever you like.
-
----
-
-<!-- .slide: data-background-color="white" data-background-iframe="https://lockhart.dev/module-federation-example/host-app" data-preload -->
-
-# 🎉 🎉 🎉 <!-- .element: class="fragment fade-out" -->
-
-Notes:
-
-- And it Just Works™️
-- (next)
-- And not only does it work, but we get some amazing benefits.
-  - First off, our host-app provides an MUI theme. And if the theme changes in the host, it changes the remotes, too!
-  - Now think, what if we had a shared React Query context? Or a shared React Router context? We'd be able to do a ton of really powerful things, all with different apps!
-
----
-
-# Sharing Dependencies
-
----
-
-## Sharing Dependencies
-
-```ts [15-25]
-{% include_relative {{ page_includes | append: '/code/host-webpack-config.js' }} %}
-```
-
-Notes:
-
-- These shared dependencies are the reason why we need the "room for magic" above.
-- By sharing dependencies across our microfrontends, we're getting at our first two goals:
-  1. It should feel like one application
-  2. It should be performant
-- Let's look at why.
+- Let's see what that results in.
 
 ---
 
@@ -758,7 +596,7 @@ build
 
 Notes:
 
-- The easiest way to illustrate this is in the build artifacts.
+- Let's start by taking a look at the result of our build.
 - On the left hand side, we have a standard CRA output.
   - (next)
   - We've got our main bundle with _everything_ in it
@@ -769,16 +607,9 @@ Notes:
   - We've still got a main bundle, but it's _very_ small. Pretty much just Webpack.
   - (next)
   - And then we've got a ton of other bundles. In fact, we've got roughly one for every dependency that we are sharing.
-- **This** is where Module Federation really shines.
-  - Since each of these chunks is a dependency, we only have to load them if we need them.
-  - So if either the host or the remote have a (valid) dependency already, we skip it.
-  - This means we can load our remotes super fast, since they might just be our own code and no dependencies.
+    - "But how do we know that?" I'm glad you asked!
 
-Aside:
-
-## Woah!
-
-But what's in each chunk?
+---
 
 ```sh
 npm run build
@@ -787,25 +618,32 @@ npx source-map-explorer 'build/static/js/*.js'
 
 Notes:
 
-- You might be asking yourselves, how can I be confident about what is in each chunk?
-- You can use the `source-map-explorer` tool to see for youself.
+- Let's build our apps, and then we can analyze the build with our source map explorer!
+
+---
+
+<!-- .slide: data-background-color="white" data-background-iframe="https://lockhart.dev/module-federation-example/remote-app-1/source-map-explorer.html" data-preload -->
+
+Notes:
+
+- And that will show us... this!
+- First, let's talk about what we're looking at.
+- Roughly, each square we see is proportionate to the size it takes up in our final bundle size.
+- See this giant one? That's Material UI.
+- Want to guess how much of this is "our" code?
+- That's right, it's the square **way** down in the bottom right. 0.6% of our bundle size.
+- If we were to go through the rest of these, we'd see that each of these chunks is (roughly) a single dependency that we are sharing.
+- **This** is where Module Federation really shines.
+  - Since each of these chunks is a dependency, we can choose what we load.
+  - If the host has already loaded Material UI, we can just skip loading this entire chunk!
+  - That's a massive savings in bundle size, and a massive savings in load time for our users.
 
 ---
 
 ## Sharing Dependencies
 
-```ts [|2|3,4,7,8]
-shared: {
-  ...dependencies,
-  react: {
-    singleton: true,
-    requiredVersion: dependencies["react"],
-  },
-  "react-dom": {
-    singleton: true,
-    requiredVersion: dependencies["react-dom"],
-  },
-}
+```ts [20-30|21|22,23,26,27]
+{% include_relative {{ page_includes | append: '/code/remote-webpack-config.js' }} %}
 ```
 
 Notes:
@@ -818,6 +656,219 @@ Notes:
   - A `singleton` shared dependency means that only one version will ever be present in the runtime.
   - This is super important for React and React DOM since they have set global state as part of their operations.
   - Without this, our remotes will create their own React references, and everything will fall apart.
+
+---
+
+# 😮‍💨
+
+Notes:
+
+- That's a lot.
+- Phew.
+- We've covered a lot of ground here.
+  - We've talked about how to export components from our remotes.
+  - And we've talked about how to share dependencies to increase our performance.
+- Let's keep going. Almost done.
+
+---
+
+# Setup
+
+## Hosts
+
+Notes:
+
+- Let's check out how we configure our hosts. We'll make this quick.
+
+---
+
+## Host Webpack Config
+
+```sh
+npm i react-app-rewired webpack-merge
+```
+
+<div class="font-md">
+
+```js [|15-25|11-14]
+{% include_relative {{ page_includes | append: '/code/host-webpack-config.js' }} %}
+```
+
+</div>
+
+Notes:
+
+- There's a bit less config here.
+- (next)
+- We've got the same shared dependencies again.
+  - And it has to be the same! If the remote shares something that the host doesn't, it won't be shared.
+- (next)
+- But this is the fun bit. Here we declare what remote apps this project can access.
+
+---
+
+<!-- .slide: data-auto-animate data-auto-animate-id="remote-url" -->
+
+## Remote URL
+
+```text
+remote_app_1@http://localhost:3001/remoteEntry.js
+```
+
+Notes:
+
+- Let's take a closer look.
+- This path that we use here, we actually build this up out of the configuration we use in the remote.
+
+---
+
+<!-- .slide: data-auto-animate data-auto-animate-id="remote-url" -->
+
+## Remote URL
+
+```text
+remote_app_1@http://localhost:3001/remoteEntry.js
+```
+
+```text
+{name}@{publicPath}{filename}
+```
+
+<div class="font-md">
+
+```js [11,15,16]
+{% include_relative {{ page_includes | append: '/code/remote-webpack-config.js' }} %}
+```
+
+</div>
+
+Notes:
+
+- The `name` is our "username" in the URL
+- The `publicPath` becomes the base of our URL
+- And the `filename` becomes the file we append to the base.
+
+---
+
+<!-- .slide: data-auto-animate data-auto-animate-id="get-our-host-ready" -->
+
+## Render Our Remote
+
+<div class="font-md">
+
+```tsx [|1|3-7|3,7|4,6|5]
+const Remote1App = React.lazy(() => import("remote_app_1/App"));
+
+<ErrorBoundary fallback={<h1>🤷</h1>}>
+  <React.Suspense fallback={<CircularProgress />}>
+    <Remote1App />
+  </React.Suspense>
+</ErrorBoundary>;
+```
+
+</div>
+
+Notes:
+
+- Awesome. Now we're ready to use it!
+- (next)
+- First, we import it. The module we import is "name of remote in webpack" / "name of exposed component"
+  - The `React.lazy` is important here, too. With this, we'll only fetch the remote bundle when we need to render it.
+- (next)
+- Then we use it!
+  - (next)
+  - We wrap the whole thing in an error boundary in case the component fails to load.
+  - (next)
+  - We wrap it in Suspense too, so that we can display a spinner while it loads.
+  - (next)
+  - And then we just render the component.
+    - We're just rendering it as-is, but this is a fully fledged React component! You can pass props, you can wrap it in other components, you can do whatever you like.
+
+---
+
+# Last Thing!
+
+---
+
+<!-- .slide: data-auto-animate data-auto-animate-id="bootstrapping-locally" -->
+
+## `host` Entrypoint
+
+```tsx []
+// src/bootstrap/host.tsx
+
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { App } from "../App";
+import "../index.css";
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+```
+
+Notes:
+
+- Remember, we said that the host was responsible for bootstrapping our application in the browser.
+- So we need a host entrypoint!
+- There's not much to discuss here. This is just the standard CRA `index.tsx` file, moved & renamed.
+  - It imports the App, creates the root, and renders it.
+- But! The fun thing is we add this to our remotes, too!
+  - In our host, we use the host entrypoint both to deploy the application, and when developing it.
+  - In our remotes, we use it mainly for development. That way we don't need to run our whole platform locally to develop our apps!
+
+---
+
+<!-- .slide: data-auto-animate data-auto-animate-id="bootstrapping-locally" -->
+
+## `host` Entrypoint
+
+```tsx [|3-4|6-8]
+// src/index.ts
+
+// ❌ This won't work once we turn on Module Federation!
+// import "./bootstrap/host";
+
+// 🪄 magic
+// Import the component, create the React root, render...
+import("./bootstrap/host").catch((e) => console.error(e));
+
+// TS wants an import, export, or an
+// empty 'export {}' statement to make it a module.
+export {};
+```
+
+Notes:
+
+- But there's an important wrinkle here.
+- (next)
+- We don't just import the entrypoint. That's important.
+  - This would work without Module Federation, but with it, we will just get a blank screen.
+- (next)
+- Instead, we make it import our entrypoint asynchronously.
+- Remember all those chunks? Well, if those chunks are our dependencies, we need fetch them before we can fetch our app.
+- By importing our host entrypoint async, we make sure that all of our dependencies are loaded before we try to render our app.
+
+---
+
+# 🥁 🥁 🥁
+
+---
+
+<!-- .slide: data-background-color="white" data-background-iframe="https://lockhart.dev/module-federation-example/host-app" data-preload -->
+
+# 🎉 🎉 🎉 <!-- .element: class="fragment fade-out" -->
+
+Notes:
+
+- And it Just Works™️
+- (next)
+- And not only does it work, but we get some amazing benefits.
+  - First off, our host-app provides an MUI theme. And if the theme changes in the host, it changes the remotes, too!
+  - Now think, what if we had a shared React Query context? Or a shared React Router context? We'd be able to do a ton of really powerful things, all with different apps!
 
 ---
 
