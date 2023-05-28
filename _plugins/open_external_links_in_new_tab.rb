@@ -13,7 +13,7 @@ end
 
 def convert_links(doc)
   parsed_doc = Nokogiri::HTML(doc.content)
-  parsed_doc.css("a:not(.internal-link):not(.footnote):not(.reversefootnote)").each do |link|
+  parsed_doc.css("a:not([href^='/']):not(.internal-link):not(.footnote):not(.reversefootnote)").each do |link|
     link.set_attribute('target', '_blank')
   end
   doc.content = parsed_doc.inner_html
