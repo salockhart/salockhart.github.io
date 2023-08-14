@@ -6,3 +6,7 @@ Speaking of which:
 
 - The slides can be found [here](/presentations/microfrontends-and-module-federation?showNotes=true).
 - The code can be found [here](https://github.com/salockhart/module-federation-example).
+
+---
+
+Update (2023-08-14): The recording from the presentation can be found [here](https://youtu.be/DmiYmK5B7To).
