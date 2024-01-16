@@ -24,7 +24,7 @@ jobs:
       - name: setup ruby
         uses: ruby/setup-ruby@v1.167.0
         with:
-          ruby-version: "2.7.7"
+          ruby-version: "3.2.2"
           bundler-cache: true
           cache-version: 0
       - name: setup pages
