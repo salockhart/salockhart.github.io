@@ -13,6 +13,9 @@ layout: default
   <subtitle>{{page.date | date: "%d %b %Y"}}</subtitle>
   {% endif %}
 
+  <!-- toc -->
+  {{ content | toc_only }}
+
   <!-- content -->
   {{ content }}
 </content>
