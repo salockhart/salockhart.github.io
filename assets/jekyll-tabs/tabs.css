@@ -1,0 +1,116 @@
+.tab {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 0 0 -1em;
+  padding: 0;
+  list-style: none;
+  position: relative;
+}
+
+.tab > * {
+  flex: none;
+  position: relative;
+}
+
+.tab > * > a {
+  display: block;
+  text-align: center;
+  padding: 0.5em 1em;
+  color: #999;
+  border-bottom: 2px solid transparent;
+  border-bottom-color: transparent;
+  font-size: 12px;
+  transition: color 0.1s ease-in-out;
+  line-height: 1em;
+}
+
+.tab > .active > a {
+  color: #222;
+  border-color: #dd1244;
+}
+
+.tab > li > a {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.tab-content {
+  padding: 0;
+  margin-top: 0;
+}
+
+.tab-content > li {
+  display: none;
+}
+.tab-content > li.active {
+  display: block;
+}
+
+.tab-content-copy-btn {
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.tab-content-copy-btn > * {
+  padding: 0.5em;
+  width: 1em;
+}
+
+.tab-content-copy-btn path {
+  fill: #333;
+}
+
+.tab-content-copy-btn:hover path {
+  fill: #111;
+}
+
+.tab-content-copy-btn:active path {
+  fill: #666;
+}
+
+.tab-content-copy-btn:focus {
+  background: none !important;
+  border: none !important;
+  color: initial !important;
+}
+
+@keyframes fadein {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeout {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* The 2 following blocks can be removed if the script is not configured to show the toast message */
+#jekyll-tabs-copy-to-clipboard-message {
+  visibility: hidden;
+
+  font-size: small;
+  color: #fff;
+  text-align: center;
+
+  background-color: #333;
+  padding: 0.5em 1em;
+
+  position: fixed;
+  z-index: 1;
+  right: 1em;
+  bottom: 1em;
+}
+
+#jekyll-tabs-copy-to-clipboard-message.show {
+  visibility: visible;
+  animation: fadein 0.5s, fadeout 0.5s 2s;
+}
