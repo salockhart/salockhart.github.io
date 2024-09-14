@@ -93,6 +93,7 @@ a {
     color: #aaaaaa;
   }
   &[href^="/"]::after,
+  &[href="#"]::after,
   &.internal-link:after,
   &.footnote:after,
   &.reversefootnote:after {

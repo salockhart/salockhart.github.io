@@ -1,0 +1,16 @@
+{
+    "manifest_version": 3,
+    "name": "example-extension",
+    "version": "0.1.0",
+    "description": "An example extension",
+    "content_scripts": [
+        {
+            "js": [
+                "content.js"
+            ],
+            "matches": [
+                "https://lockhart.dev/2024/09/07/chrome-extensions-with-esbuild/"
+            ]
+        }
+    ]
+}
