@@ -30,18 +30,23 @@ permalink: /
 </ul>
 
 <script>
-  document.querySelectorAll('[data-post-date]').forEach((el) => {
-    const date = new Date(el.dataset.postDate);
-    const now = new Date();
-    if (date > now) {
-      el.classList.add('future');
-      const link = el.querySelector('a');
-      link.replaceWith(link.innerText);
-      
-      const pill = document.createElement("span");
-      pill.classList.add("coming-soon");
-      pill.innerText = "Coming Soon";
-      el.appendChild(pill);
-    }
-  });
+  // if there is not a "force" query param, hide the future posts
+  const urlParams = new URLSearchParams(window.location.search);
+  const force = urlParams.get('force');
+  if (!force) {
+    document.querySelectorAll('[data-post-date]').forEach((el) => {
+      const date = new Date(el.dataset.postDate);
+      const now = new Date();
+      if (date > now) {
+        el.classList.add('future');
+        const link = el.querySelector('a');
+        link.replaceWith(link.innerText);
+        
+        const pill = document.createElement("span");
+        pill.classList.add("coming-soon");
+        pill.innerText = "Coming Soon";
+        el.appendChild(pill);
+      }
+    });
+  }
 </script>
