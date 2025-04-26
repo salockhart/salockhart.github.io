@@ -9,48 +9,6 @@ reveal:
 {% assign page_includes = page.slug | split: '/' | join: '/' %}
 {% assign page_assets = page.url | prepend: '/assets' | split: '/' | join: '/' %}
 
-<style>
-  .one-col {
-    display: grid;
-    grid-template-columns: 1fr;
-  }
-
-  .two-col {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .three-col {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-  }
-
-  .place-center {
-    place-items: center;
-  }
-
-  .font-sm {
-    font-size: 30px;
-  }
-
-  .font-md {
-    .font-size: 35px;
-  }
-
-  .fragment.semi-fade-out-then-in {
-    opacity: 1;
-  }
-
-  .fragment.semi-fade-out-then-in.current-fragment {
-    opacity: .5;
-  }
-
-  [data-qr-code] img {
-    padding: 16px;
-    background: white;
-  }
-</style>
-
 <section data-markdown>
 <textarea data-template>
 
