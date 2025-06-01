@@ -1,6 +1,5 @@
 title: Alex Lockhart
 include: ["_pages"]
-exclude: ["_includes/notes_graph.json", "renovate.json"]
 baseurl: ""
 
 future: true
@@ -23,8 +22,6 @@ sass:
   style: compressed
 
 collections:
-  notes:
-    output: true
   presentations:
     output: true
 
@@ -37,10 +34,6 @@ defaults:
       path: "_posts/**/*.md"
     values:
       layout: "post"
-  - scope:
-      path: "_notes/**/*.md"
-    values:
-      layout: "note"
   - scope:
       path: "_presentations/**/*.md"
     values:
