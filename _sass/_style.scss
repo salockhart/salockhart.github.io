@@ -83,10 +83,12 @@ a {
   text-decoration: none;
   border-bottom: 1px solid $color-border;
   color: $color-primary;
+
   &:hover {
     color: black !important;
     background: #fffaf1;
   }
+
   &:after {
     position: relative;
     top: -0.5em;
@@ -94,6 +96,7 @@ a {
     content: "↗";
     color: #aaaaaa;
   }
+
   &[href^="/"]::after,
   &[href="#"]::after,
   &.internal-link:after,
@@ -112,39 +115,8 @@ nav {
   margin: 1em 0 3em;
 }
 
-#notes-entry-container {
-  display: grid;
-  grid-gap: 2em;
-  grid-template-areas:
-    "content"
-    "side";
-
-  @media (min-width: 700px) {
-    grid-template-columns: 3fr 1fr;
-    grid-template-areas: "content side";
-  }
-}
-
-.backlink-box {
-  background: $color-box-background;
-  padding: 1em;
-  border-radius: $border-radius;
-}
-
 code {
   background: #f5f5f5;
   padding: 0.1em 0.2em;
   border-radius: 4px;
-}
-
-.invalid-link {
-  color: #444444;
-  cursor: help;
-  background: #fafafa;
-  padding: 0 0.1em;
-}
-
-.invalid-link-brackets {
-  color: #ccc;
-  cursor: help;
 }
