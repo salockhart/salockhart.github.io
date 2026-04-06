@@ -1,0 +1,20 @@
+name: ci
+
+on:
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v6
+      - name: setup ruby
+        uses: ruby/setup-ruby@v1.299.0
+        with:
+          ruby-version: "4.0.2"
+          bundler-cache: true
+          cache-version: 0
+      - name: build
+        run: bundle exec jekyll build
